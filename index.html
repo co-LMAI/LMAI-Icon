@@ -203,8 +203,8 @@ section{scroll-margin-top:24px}
   <div id="markGrid" class="mark-grid"></div>
   <div class="cat-title" style="margin-top:38px">
     <span class="cn">Variants</span>
-    <span class="en">组合变体 · 文字 / 组合 / 头像 / 应用图标</span>
-    <span class="count">5 marks</span>
+    <span class="en">组合变体 · 文字 / 组合 / 头像 / 应用图标 / 反白 / 尺寸 / 主色 / 场景</span>
+    <span class="count">9 marks</span>
   </div>
   <div id="variantGrid" class="mark-grid"></div>
 </section>
@@ -783,13 +783,14 @@ function vt(txt,x,y,fs,ls,fill,anchor){
   const t=X("text",{x,y,"text-anchor":anchor||"middle","dominant-baseline":"middle","font-size":fs,"font-weight":800,fill:fill||"var(--bg)","font-family":"inherit","letter-spacing":ls||0});
   t.textContent=txt; return t;
 }
-function faceInto(s,cx,cy,ew,sw,msize){
-  s.appendChild(X("path",{d:`M ${cx-ew} ${cy} Q ${cx-ew/2} ${cy+6.5} ${cx-3} ${cy+0.5}`,fill:"none",stroke:"var(--bg)","stroke-width":sw,"stroke-linecap":"round"}));
-  s.appendChild(X("path",{d:`M ${cx+3} ${cy+0.5} Q ${cx+ew/2} ${cy+6.5} ${cx+ew} ${cy}`,fill:"none",stroke:"var(--bg)","stroke-width":sw,"stroke-linecap":"round"}));
-  s.appendChild(vt("LMAI",cx,cy+15,msize,2.2));
+function faceInto(s,cx,cy,ew,sw,msize,fill){
+  fill = fill || "var(--bg)";
+  s.appendChild(X("path",{d:`M ${cx-ew} ${cy} Q ${cx-ew/2} ${cy+6.5} ${cx-3} ${cy+0.5}`,fill:"none",stroke:fill,"stroke-width":sw,"stroke-linecap":"round"}));
+  s.appendChild(X("path",{d:`M ${cx+3} ${cy+0.5} Q ${cx+ew/2} ${cy+6.5} ${cx+ew} ${cy}`,fill:"none",stroke:fill,"stroke-width":sw,"stroke-linecap":"round"}));
+  s.appendChild(vt("LMAI",cx,cy+15,msize,2.2,fill));
 }
-function faceAt(s,cx,cy,ew,sw,msize,bx,by,bk){
-  faceInto(s,cx,cy,ew,sw,msize);
+function faceAt(s,cx,cy,ew,sw,msize,bx,by,bk,fill){
+  faceInto(s,cx,cy,ew,sw,msize,fill);
   s.appendChild(X("path",{d:bowD(bx,by,bk),fill:"var(--accent)"}));
 }
 const VARIANTS = [
@@ -817,6 +818,42 @@ const VARIANTS = [
       s.appendChild(vt("LMAI",76,25,20,3,"var(--fg)"));
       s.appendChild(X("path",{d:bowD(112,25,0.3),fill:"var(--accent)"}));
       s.appendChild(vt("AGENT · QUANT",76,45,7,2.4,"var(--faint)"));
+    }},
+  { name:"INVERSE PAIR", code:"lm-brand-inverse", wide:true, build:s=>{
+      s.appendChild(X("circle",{cx:32,cy:32,r:21,fill:"var(--fg)"}));
+      s.appendChild(vt("LMAI",32,33,9,1.5));
+      s.appendChild(X("path",{d:bowD(41,19,0.28),fill:"var(--accent)"}));
+      s.appendChild(X("circle",{cx:128,cy:32,r:21,fill:"var(--bg)",stroke:"var(--line)","stroke-width":2}));
+      s.appendChild(vt("LMAI",128,33,9,1.5,"var(--fg)"));
+      s.appendChild(X("path",{d:bowD(137,19,0.28),fill:"var(--accent)"}));
+    }},
+  { name:"SIZES", code:"lm-brand-sizes", wide:true, build:s=>{
+      [[18,50,16],[45,47,22],[76,43,30],[110,38,40],[146,32,52]].forEach(([x,cy,d])=>{
+        s.appendChild(X("circle",{cx:x,cy,r:d/2,fill:"var(--fg)"}));
+        if(d>=30) s.appendChild(vt("L",x,cy+1,d*0.42,0));
+      });
+    }},
+  { name:"COLOR", code:"lm-brand-color", build:s=>{
+      s.appendChild(X("circle",{cx:24,cy:24,r:21,fill:"var(--accent)"}));
+      faceInto(s,24,20,9,4.5,7,"var(--fg)");
+      s.appendChild(X("path",{d:bowD(33,11,0.28),fill:"var(--fg)"}));
+    }},
+  { name:"TAB BAR", code:"lm-brand-tabbar", wide:true, build:s=>{
+      s.appendChild(X("rect",{x:8,y:22,width:144,height:26,rx:13,fill:"var(--fg)"}));
+      s.appendChild(wr(25,27,14,11,3));
+      s.appendChild(wf("M 29 38 L 27 42 L 33 38 Z"));
+      s.appendChild(X("circle",{cx:29.5,cy:32.5,r:1.1,fill:"var(--bg)"}));
+      s.appendChild(X("circle",{cx:32,cy:32.5,r:1.1,fill:"var(--bg)"}));
+      s.appendChild(X("circle",{cx:34.5,cy:32.5,r:1.1,fill:"var(--bg)"}));
+      s.appendChild(wr(58,28,12,12,2));
+      s.appendChild(wl("M 64 28 V 40"));
+      s.appendChild(wl("M 58 34 H 70"));
+      s.appendChild(wc(93,32.5,4));
+      s.appendChild(wl("M 96 35.5 L 100 39.5"));
+      s.appendChild(X("circle",{cx:123.5,cy:32.5,r:1.6,fill:"var(--bg)"}));
+      s.appendChild(X("circle",{cx:127.5,cy:32.5,r:1.6,fill:"var(--bg)"}));
+      s.appendChild(wd(131.5,32.5,1.6));
+      s.appendChild(wd(32,52,2));
     }}
 ];
 function buildVariants(){
