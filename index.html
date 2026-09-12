@@ -74,6 +74,7 @@ section{scroll-margin-top:24px}
 .mark-cell{border:1px solid var(--line-soft);border-radius:6px;padding:18px 12px 14px;display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--card);transition:border-color .18s}
 .mark-cell:hover{border-color:var(--line)}
 .mark-cell svg{width:72px;height:72px;display:block}
+.mark-cell svg.wide{width:190px;height:76px}
 .mark-cell .m-name{font-size:11px;font-weight:800;letter-spacing:.14em}
 .mark-cell .m-code{font-size:10.5px;color:var(--faint);letter-spacing:.08em;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
 /* ===== icon system cats ===== */
@@ -200,6 +201,12 @@ section{scroll-margin-top:24px}
   </div>
   <p class="sec-lead">整套系统从 LMAI 字母中生长：字标、单字母、组合标与环形标构成核心标识层。全部以 SVG 精确构建，48px 标准网格、2px 描边、4px 圆角。</p>
   <div id="markGrid" class="mark-grid"></div>
+  <div class="cat-title" style="margin-top:38px">
+    <span class="cn">Variants</span>
+    <span class="en">组合变体 · 文字 / 组合 / 头像 / 应用图标</span>
+    <span class="count">5 marks</span>
+  </div>
+  <div id="variantGrid" class="mark-grid"></div>
 </section>
 
 <!-- ===== 03 Icon System : 48 marks ===== -->
@@ -766,10 +773,73 @@ function tick(now){
   requestAnimationFrame(tick);
 }
 
+/* ---------- Variants : Text / Combine / Avatar / AppIcon ---------- */
+function bowD(cx,cy,k){
+  const w=14*k, h=7.5*k, c=1.5*k;
+  return `M ${cx} ${cy} L ${cx-w} ${cy-h} Q ${cx-w-c} ${cy} ${cx-w} ${cy+h} Z`
+       + ` M ${cx} ${cy} L ${cx+w} ${cy-h} Q ${cx+w+c} ${cy} ${cx+w} ${cy+h} Z`;
+}
+function vt(txt,x,y,fs,ls,fill,anchor){
+  const t=X("text",{x,y,"text-anchor":anchor||"middle","dominant-baseline":"middle","font-size":fs,"font-weight":800,fill:fill||"var(--bg)","font-family":"inherit","letter-spacing":ls||0});
+  t.textContent=txt; return t;
+}
+function faceInto(s,cx,cy,ew,sw,msize){
+  s.appendChild(X("path",{d:`M ${cx-ew} ${cy} Q ${cx-ew/2} ${cy+6.5} ${cx-3} ${cy+0.5}`,fill:"none",stroke:"var(--bg)","stroke-width":sw,"stroke-linecap":"round"}));
+  s.appendChild(X("path",{d:`M ${cx+3} ${cy+0.5} Q ${cx+ew/2} ${cy+6.5} ${cx+ew} ${cy}`,fill:"none",stroke:"var(--bg)","stroke-width":sw,"stroke-linecap":"round"}));
+  s.appendChild(vt("LMAI",cx,cy+15,msize,2.2));
+}
+function faceAt(s,cx,cy,ew,sw,msize,bx,by,bk){
+  faceInto(s,cx,cy,ew,sw,msize);
+  s.appendChild(X("path",{d:bowD(bx,by,bk),fill:"var(--accent)"}));
+}
+const VARIANTS = [
+  { name:"AVATAR · CIRCLE", code:"lm-brand-avatar-circle", build:s=>{
+      s.appendChild(X("circle",{cx:24,cy:24,r:21,fill:"var(--fg)"}));
+      faceAt(s,24,20,9,4.5,7,33,11,0.28);
+    }},
+  { name:"AVATAR · SQUARE", code:"lm-brand-avatar-square", build:s=>{
+      s.appendChild(X("rect",{x:3,y:3,width:42,height:42,rx:10,fill:"var(--fg)"}));
+      faceAt(s,24,20,9,4.5,7,33,11,0.28);
+    }},
+  { name:"APP ICON", code:"lm-brand-appicon", build:s=>{
+      s.appendChild(X("rect",{x:3,y:3,width:42,height:42,rx:12,fill:"var(--fg)"}));
+      s.appendChild(vt("L",24,25,22,0));
+      s.appendChild(X("path",{d:bowD(34,12,0.26),fill:"var(--accent)"}));
+    }},
+  { name:"COMBINE", code:"lm-brand-combine", wide:true, build:s=>{
+      s.appendChild(X("circle",{cx:32,cy:32,r:21,fill:"var(--fg)"}));
+      faceAt(s,32,28,9,4.5,7,41,19,0.28);
+      s.appendChild(vt("LMAI",64,26,22,2.5,"var(--fg)","start"));
+      s.appendChild(vt("AGENT · QUANT",64.5,46,7,1.9,"var(--faint)","start"));
+      s.appendChild(X("path",{d:bowD(138,25,0.3),fill:"var(--accent)"}));
+    }},
+  { name:"TEXT", code:"lm-brand-text", wide:true, build:s=>{
+      s.appendChild(vt("LMAI",76,25,20,3,"var(--fg)"));
+      s.appendChild(X("path",{d:bowD(112,25,0.3),fill:"var(--accent)"}));
+      s.appendChild(vt("AGENT · QUANT",76,45,7,2.4,"var(--faint)"));
+    }}
+];
+function buildVariants(){
+  const grid = $("variantGrid");
+  VARIANTS.forEach(v=>{
+    const cell = document.createElement("div"); cell.className = "mark-cell";
+    const svg = document.createElementNS(NSX,"svg");
+    svg.setAttribute("viewBox", v.wide ? "0 0 160 64" : "0 0 48 48");
+    if(v.wide) svg.setAttribute("class","wide");
+    v.build(svg);
+    cell.appendChild(svg);
+    const n = document.createElement("div"); n.className="m-name"; n.textContent = v.name;
+    const c = document.createElement("div"); c.className="m-code"; c.textContent = v.code;
+    cell.appendChild(n); cell.appendChild(c);
+    grid.appendChild(cell);
+  });
+}
+
 /* ---------- Init ---------- */
 buildFX();
 buildStateBar();
 buildMarks();
+buildVariants();
 buildIcons();
 buildGridDemo();
 setState("idle");

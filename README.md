@@ -15,7 +15,7 @@ LMAI（Liao Mai AI）专属视觉图标系统，适用于 **AI Agent 智能助�
 |---|---|
 | Hero 角色 | LMAI 拟人化图标：弧线眼 + LMAI 字母嘴，光标跟随、弹簧物理、状态节拍 |
 | Status & Expressions | 10 种交互状态（思考 / 聆听 / 生成 / 回复 / 完成 / 报错 / 提醒 / 搜索…） |
-| Core Marks | 核心字母徽章层（字标 / 单字母 / 组合标 / 环形标） |
+| Core Marks | 核心字母徽章层（字标 / 单字母 / 组合标 / 环形标）+ 组合变体（头像圆/方 · 应用图标 · 组合标 · 纯文字标） |
 | Icon System | **48 枚**图标，六大类：品牌资产 9 · APP 导航 6 · Agent 功能 10 · Agent 状态 8 · Quant 流程 9 · 系统状态 6 |
 | Basic Rules | 色彩、48px 网格与描边、设计规则 |
 | Naming | 六类命名规范：`lm-brand-` / `lm-nav-` / `lm-fn-` / `lm-status-` / `lm-quant-` / `lm-sys-` |
