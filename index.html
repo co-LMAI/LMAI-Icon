@@ -609,55 +609,55 @@ const CATS = [
     { name:"Signature", code:"lm-brand-signature", draw:s=>{ s.appendChild(wt("LMAI",24,21,9,1)); s.appendChild(wl("M 7 31 Q 16 37 24 31 T 41 31")); s.appendChild(wd(41,31,2)); } },
     { name:"Dot", code:"lm-brand-dot", draw:s=>{ s.appendChild(wc(24,24,9)); s.appendChild(wd(24,24,3.5)); } },
     { name:"Link", code:"lm-brand-link", draw:s=>{ s.appendChild(wc(18,24,8)); s.appendChild(wc(30,24,8)); s.appendChild(wd(24,24,2)); } },
-    { name:"Memory", code:"lm-brand-memory", draw:s=>{ s.appendChild(wc(24,24,10)); s.appendChild(X("circle",{cx:18,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:24,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(wd(30,24,2)); } },
-    { name:"Response", code:"lm-brand-response", draw:s=>{ s.appendChild(wr(12,16,24,16,5)); s.appendChild(wf("M 15 32 L 13 36 L 21 32 Z")); s.appendChild(X("circle",{cx:17,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:22,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(wd(27,24,2)); } }
+    { name:"Memory", code:"lm-brand-memory", draw:s=>{ s.appendChild(wr(15,15,18,18,3)); s.appendChild(wr(20,20,8,8,1.5)); s.appendChild(wl("M 19 11 V 15 M 24 11 V 15 M 29 11 V 15 M 19 33 V 37 M 24 33 V 37 M 29 33 V 37")); } },
+    { name:"Response", code:"lm-brand-response", draw:s=>{ s.appendChild(wr(12,16,24,16,5)); s.appendChild(wf("M 15 32 L 13 36 L 21 32 Z")); s.appendChild(wl("M 27 27 V 26 Q 27 20.5 21.5 20.5")); s.appendChild(wf("M 24.5 18 L 20 20.5 L 24.5 23 Z")); } }
   ]},
   { cn:"App Navigation", en:"一级导航 · 底部 Tab / 侧边栏", items:[
     { name:"Chat", code:"lm-nav-chat", draw:s=>{ s.appendChild(wr(12,16,24,16,5)); s.appendChild(wf("M 15 32 L 13 37 L 22 32 Z")); s.appendChild(X("circle",{cx:17.5,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:22.5,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(wd(27.5,24,2)); } },
     { name:"Workspace", code:"lm-nav-workspace", draw:s=>{ s.appendChild(wl("M 12 24 H 36")); s.appendChild(wl("M 24 12 V 36")); s.appendChild(wd(17,17,2.2)); } },
-    { name:"Search", code:"lm-nav-search", draw:s=>{ s.appendChild(wc(20,20,7)); s.appendChild(wl("M 25 25 L 34 34")); s.appendChild(wd(26,14,2)); } },
+    { name:"Search", code:"lm-nav-search", draw:s=>{ s.appendChild(wc(20,20,7)); s.appendChild(wl("M 25 25 L 34 34")); } },
     { name:"Memory", code:"lm-nav-memory", draw:s=>{ s.appendChild(wc(24,24,9)); s.appendChild(X("circle",{cx:18.5,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:24,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(wd(29.5,24,2)); } },
-    { name:"History", code:"lm-nav-history", draw:s=>{ s.appendChild(wc(19,24,8)); s.appendChild(wl("M 19 24 V 18.5")); s.appendChild(wl("M 19 24 L 24.5 26.5")); s.appendChild(wd(33,14,2)); } },
-    { name:"Settings", code:"lm-nav-settings", draw:s=>{ s.appendChild(wc(22,22,5.5)); s.appendChild(wl("M 22 13.5 V 11")); s.appendChild(wl("M 30.5 22 H 33")); s.appendChild(wl("M 22 30.5 V 33")); s.appendChild(wl("M 13.5 22 H 11")); s.appendChild(wd(22,22,2)); } }
+    { name:"History", code:"lm-nav-history", draw:s=>{ s.appendChild(wc(19,24,8)); s.appendChild(wl("M 19 24 V 18.5")); s.appendChild(wl("M 19 24 L 24.5 26.5")); } },
+    { name:"Settings", code:"lm-nav-settings", draw:s=>{ s.appendChild(wc(24,24,5.5)); s.appendChild(wl("M 24 15.5 V 13 M 32.5 24 H 35 M 24 32.5 V 35 M 15.5 24 H 13")); s.appendChild(wl("M 28.6 19.4 L 30.4 17.6 M 19.4 19.4 L 17.6 17.6 M 28.6 28.6 L 30.4 30.4 M 19.4 28.6 L 17.6 30.4")); s.appendChild(wd(24,24,2)); } }
   ]},
   { cn:"Agent Functions", en:"功能操作 · 会话 / 工具 / 内容", items:[
-    { name:"New", code:"lm-fn-new", draw:s=>{ s.appendChild(wl("M 24 14 V 34")); s.appendChild(wl("M 14 24 H 34")); s.appendChild(wd(37,11,2)); } },
+    { name:"New", code:"lm-fn-new", draw:s=>{ s.appendChild(wl("M 24 14 V 34")); s.appendChild(wl("M 14 24 H 34")); } },
     { name:"Tools", code:"lm-fn-tools", draw:s=>{ s.appendChild(wc(18,18,6.5)); s.appendChild(wl("M 23 23 L 33 33")); s.appendChild(wd(13,33,2)); } },
-    { name:"Document", code:"lm-fn-document", draw:s=>{ s.appendChild(wr(14,11,20,26,3)); s.appendChild(wl("M 18 19 H 30")); s.appendChild(wl("M 18 24 H 30")); s.appendChild(wl("M 18 29 H 26")); s.appendChild(wd(36,12,2)); } },
+    { name:"Document", code:"lm-fn-document", draw:s=>{ s.appendChild(wr(14,11,20,26,3)); s.appendChild(wl("M 18 19 H 30")); s.appendChild(wl("M 18 24 H 30")); s.appendChild(wl("M 18 29 H 26")); } },
     { name:"Image", code:"lm-fn-image", draw:s=>{ s.appendChild(wr(11,15,26,18,3)); s.appendChild(wl("M 15 30 L 21 23 L 25 27 L 28 24 L 33 29")); s.appendChild(wd(30,19,2.2)); } },
-    { name:"Voice", code:"lm-fn-voice", draw:s=>{ s.appendChild(wr(19,10,10,15,4)); s.appendChild(wl("M 15 22 A 9 9 0 0 0 33 22")); s.appendChild(wl("M 15 29 H 33")); s.appendChild(wd(36,12,2)); } },
+    { name:"Voice", code:"lm-fn-voice", draw:s=>{ s.appendChild(wr(19,10,10,15,4)); s.appendChild(wl("M 15 22 A 9 9 0 0 0 33 22")); s.appendChild(wl("M 15 29 H 33")); } },
     { name:"Copy", code:"lm-fn-copy", draw:s=>{ s.appendChild(wr(16,13,18,14,3)); s.appendChild(wr(13,19,18,14,3)); s.appendChild(wd(12,12,2)); } },
-    { name:"Export", code:"lm-fn-export", draw:s=>{ s.appendChild(wr(11,18,26,14,2)); s.appendChild(wl("M 24 8 V 17")); s.appendChild(wl("M 19 12 L 24 17 L 29 12")); s.appendChild(wd(36,10,2)); } },
-    { name:"Stop", code:"lm-fn-stop", draw:s=>{ s.appendChild(X("rect",{x:17,y:17,width:14,height:14,rx:3,fill:"var(--bg)"})); s.appendChild(wd(36,12,2)); } },
+    { name:"Export", code:"lm-fn-export", draw:s=>{ s.appendChild(wr(11,18,26,14,2)); s.appendChild(wl("M 24 8 V 17")); s.appendChild(wl("M 19 12 L 24 17 L 29 12")); } },
+    { name:"Stop", code:"lm-fn-stop", draw:s=>{ s.appendChild(X("rect",{x:17,y:17,width:14,height:14,rx:3,fill:"var(--bg)"})); } },
     { name:"Refresh", code:"lm-fn-refresh", draw:s=>{ s.appendChild(wl(arcPath(24,24,10,Math.PI*1.05,Math.PI*2.05))); s.appendChild(wl("M 33.9 22.4 L 29 22.4")); s.appendChild(wf("M 32 19.6 L 28.6 22.4 L 32 25.2 Z")); s.appendChild(wd(24,24,2)); } },
-    { name:"Delete", code:"lm-fn-delete", draw:s=>{ s.appendChild(wr(14,20,20,15,3)); s.appendChild(wr(16,14,16,5,1.5)); s.appendChild(wl("M 12 20 H 36")); s.appendChild(wl("M 20 24 V 30")); s.appendChild(wl("M 28 24 V 30")); s.appendChild(wd(37,12,2)); } }
+    { name:"Delete", code:"lm-fn-delete", draw:s=>{ s.appendChild(wr(14,20,20,15,3)); s.appendChild(wr(16,14,16,5,1.5)); s.appendChild(wl("M 12 20 H 36")); s.appendChild(wl("M 20 24 V 30")); s.appendChild(wl("M 28 24 V 30")); } }
   ]},
   { cn:"Agent States", en:"实时状态 · 助手反馈", items:[
     { name:"Idle", code:"lm-status-idle", draw:s=>{ s.appendChild(X("circle",{cx:24,cy:24,r:3.5,fill:"var(--bg)"})); } },
     { name:"Listening", code:"lm-status-listening", draw:s=>{ s.appendChild(wl("M 15 18 A 8 8 0 0 0 15 30")); s.appendChild(wl("M 10 14 A 13 13 0 0 0 10 34")); s.appendChild(wd(24,24,2)); } },
     { name:"Thinking", code:"lm-status-thinking", draw:s=>{ s.appendChild(X("circle",{cx:17,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:24,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(wd(31,24,3)); } },
-    { name:"Generating", code:"lm-status-generating", draw:s=>{ s.appendChild(wl(arcPath(24,24,11,-2.2,0.9))); s.appendChild(wd(24,24,2)); } },
-    { name:"Replying", code:"lm-status-replying", draw:s=>{ s.appendChild(wr(12,16,24,16,5)); s.appendChild(wf("M 15 32 L 13 37 L 22 32 Z")); s.appendChild(X("circle",{cx:17.5,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:22.5,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(wd(27.5,24,2)); } },
-    { name:"Done", code:"lm-status-done", draw:s=>{ s.appendChild(wl("M 15 24 L 21 30 L 33 17")); s.appendChild(wd(36,11,2)); } },
-    { name:"Error", code:"lm-status-error", draw:s=>{ s.appendChild(wl("M 16 16 L 32 32")); s.appendChild(wl("M 32 16 L 16 32")); s.appendChild(wd(36,11,2)); } },
+    { name:"Generating", code:"lm-status-generating", draw:s=>{ s.appendChild(wl(arcPath(24,24,11,-2.2,0.9))); s.appendChild(X("circle",{cx:14.6,cy:18.3,r:1.6,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:13.3,cy:21.4,r:1.6,fill:"var(--bg)"})); } },
+    { name:"Replying", code:"lm-status-replying", draw:s=>{ s.appendChild(wr(12,16,24,16,5)); s.appendChild(wf("M 15 32 L 13 37 L 22 32 Z")); s.appendChild(wl("M 17 21 H 31")); s.appendChild(wl("M 17 26 H 26")); } },
+    { name:"Done", code:"lm-status-done", draw:s=>{ s.appendChild(wl("M 15 24 L 21 30 L 33 17")); } },
+    { name:"Error", code:"lm-status-error", draw:s=>{ s.appendChild(wl("M 16 16 L 32 32")); s.appendChild(wl("M 32 16 L 16 32")); } },
     { name:"Reminder", code:"lm-status-reminder", draw:s=>{ s.appendChild(wl("M 16 15 C 13 23 11 25 11 28 M 32 15 C 35 23 37 25 37 28 M 11 28 H 37")); s.appendChild(wl("M 24 28 V 32")); s.appendChild(wd(24,35,1.8)); } }
   ]},
   { cn:"Quant Flow", en:"量化流程 · 数据运算链路", items:[
-    { name:"Input", code:"lm-quant-input", draw:s=>{ s.appendChild(wr(17,16,15,16,3)); s.appendChild(wl("M 8 24 H 20")); s.appendChild(wl("M 15 20 L 20 24 L 15 28")); s.appendChild(wd(36,12,2)); } },
+    { name:"Input", code:"lm-quant-input", draw:s=>{ s.appendChild(wr(17,16,15,16,3)); s.appendChild(wl("M 8 24 H 20")); s.appendChild(wl("M 15 20 L 20 24 L 15 28")); } },
     { name:"Parse", code:"lm-quant-parse", draw:s=>{ s.appendChild(wr(13,15,22,18,3)); s.appendChild(wl("M 24 15 V 33")); s.appendChild(wl("M 13 24 H 35")); s.appendChild(wd(24,24,2)); } },
     { name:"Plan", code:"lm-quant-plan", draw:s=>{ s.appendChild(wl("M 15 24 H 33")); s.appendChild(X("circle",{cx:14,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(wd(24,24,3)); s.appendChild(X("circle",{cx:34,cy:24,r:3,fill:"var(--bg)"})); } },
-    { name:"Retrieve", code:"lm-quant-retrieve", draw:s=>{ s.appendChild(wr(13,22,22,11,3)); s.appendChild(wl("M 24 9 V 20")); s.appendChild(wl("M 20 13 L 24 9 L 28 13")); s.appendChild(wd(36,11,2)); } },
-    { name:"Tool", code:"lm-quant-tool", draw:s=>{ s.appendChild(wc(17,17,6.5)); s.appendChild(wl("M 22 22 L 31 31")); s.appendChild(wd(13,33,2)); } },
-    { name:"Backtest", code:"lm-quant-backtest", draw:s=>{ s.appendChild(wc(19,21,7.5)); s.appendChild(wl("M 19 21 V 15.5")); s.appendChild(wl("M 19 21 L 24.5 23.5")); s.appendChild(wl("M 32 14 A 12 12 0 1 1 34 26")); s.appendChild(wd(32,14,2)); } },
-    { name:"Risk Check", code:"lm-quant-risk", draw:s=>{ s.appendChild(wl("M 24 11 L 33 15 V 24 C 33 31 29 34 24 37 C 19 34 15 31 15 24 V 15 Z")); s.appendChild(wl("M 19 24 L 23 28 L 29 21")); s.appendChild(wd(36,12,2)); } },
-    { name:"Output", code:"lm-quant-output", draw:s=>{ s.appendChild(wr(16,16,15,16,3)); s.appendChild(wl("M 28 24 H 40")); s.appendChild(wl("M 35 20 L 40 24 L 35 28")); s.appendChild(wd(36,12,2)); } },
+    { name:"Retrieve", code:"lm-quant-retrieve", draw:s=>{ s.appendChild(wr(13,22,22,11,3)); s.appendChild(wl("M 24 9 V 20")); s.appendChild(wl("M 20 13 L 24 9 L 28 13")); } },
+    { name:"Tool", code:"lm-quant-tool", draw:s=>{ s.appendChild(wr(12,14,24,20,3)); s.appendChild(wl("M 17 21 L 21 24 L 17 27")); s.appendChild(wl("M 23 27 H 29")); } },
+    { name:"Backtest", code:"lm-quant-backtest", draw:s=>{ s.appendChild(wc(19,21,7.5)); s.appendChild(wl("M 19 21 V 15.5")); s.appendChild(wl("M 19 21 L 24.5 23.5")); s.appendChild(wl("M 32 14 A 12 12 0 1 1 34 26")); } },
+    { name:"Risk Check", code:"lm-quant-risk", draw:s=>{ s.appendChild(wl("M 24 11 L 33 15 V 24 C 33 31 29 34 24 37 C 19 34 15 31 15 24 V 15 Z")); s.appendChild(wl("M 19 24 L 23 28 L 29 21")); } },
+    { name:"Output", code:"lm-quant-output", draw:s=>{ s.appendChild(wr(16,16,15,16,3)); s.appendChild(wl("M 28 24 H 40")); s.appendChild(wl("M 35 20 L 40 24 L 35 28")); } },
     { name:"Finish", code:"lm-quant-finish", draw:s=>{ s.appendChild(wl("M 15 12 V 34")); s.appendChild(wf("M 15 12 L 31 16 L 15 20 Z")); s.appendChild(wd(31,16,2)); } }
   ]},
   { cn:"System States", en:"系统通用 · 全局提示", items:[
     { name:"Loading", code:"lm-sys-loading", draw:s=>{ s.appendChild(wl(arcPath(24,24,11,-2.4,0.4))); s.appendChild(wd(24,24,2)); } },
     { name:"Connecting", code:"lm-sys-connecting", draw:s=>{ s.appendChild(X("circle",{cx:14,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:34,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(wl("M 17 24 A 7 7 0 0 1 31 24")); s.appendChild(wd(24,24,2)); } },
-    { name:"Success", code:"lm-sys-success", draw:s=>{ s.appendChild(wc(24,24,10.5)); s.appendChild(wl("M 16.5 24 L 21.5 29 L 31.5 19")); s.appendChild(wd(36,12,2)); } },
-    { name:"Warning", code:"lm-sys-warning", draw:s=>{ s.appendChild(wl("M 24 14 L 35 33 H 13 Z")); s.appendChild(wl("M 24 21 V 27")); s.appendChild(X("circle",{cx:24,cy:31,r:1.8,fill:"var(--bg)"})); s.appendChild(wd(36,12,2)); } },
+    { name:"Success", code:"lm-sys-success", draw:s=>{ s.appendChild(wc(24,24,10.5)); s.appendChild(wl("M 16.5 24 L 21.5 29 L 31.5 19")); } },
+    { name:"Warning", code:"lm-sys-warning", draw:s=>{ s.appendChild(wl("M 24 14 L 35 33 H 13 Z")); s.appendChild(wl("M 24 21 V 27")); s.appendChild(X("circle",{cx:24,cy:31,r:1.8,fill:"var(--bg)"})); } },
     { name:"Lock", code:"lm-sys-lock", draw:s=>{ s.appendChild(wr(15,21,18,13,3)); s.appendChild(wl("M 19 21 V 17 A 5 5 0 0 1 29 17 V 21")); s.appendChild(wd(24,28,1.8)); } },
     { name:"Empty", code:"lm-sys-empty", draw:s=>{ s.appendChild(X("rect",{x:14,y:14,width:20,height:20,rx:4,fill:"none",stroke:"var(--bg)","stroke-width":2,"stroke-dasharray":"3 3"})); s.appendChild(wd(24,24,2.5)); } }
   ]}
