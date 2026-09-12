@@ -203,8 +203,8 @@ section{scroll-margin-top:24px}
   <div id="markGrid" class="mark-grid"></div>
   <div class="cat-title" style="margin-top:38px">
     <span class="cn">Variants</span>
-    <span class="en">组合变体 · 文字 / 组合 / 头像 / 应用图标 / 反白 / 尺寸 / 主色 / 场景</span>
-    <span class="count">9 marks</span>
+    <span class="en">组合变体 · 文字 / 组合 / 头像 / 应用图标 / 反白 / 主色 / 场景</span>
+    <span class="count">8 marks</span>
   </div>
   <div id="variantGrid" class="mark-grid"></div>
 </section>
@@ -826,12 +826,6 @@ const VARIANTS = [
       s.appendChild(X("circle",{cx:128,cy:32,r:21,fill:"var(--bg)",stroke:"var(--line)","stroke-width":2}));
       s.appendChild(vt("LMAI",128,33,9,1.5,"var(--fg)"));
       s.appendChild(X("path",{d:bowD(137,19,0.28),fill:"var(--accent)"}));
-    }},
-  { name:"SIZES", code:"lm-brand-sizes", wide:true, build:s=>{
-      [[18,50,16],[45,47,22],[76,43,30],[110,38,40],[146,32,52]].forEach(([x,cy,d])=>{
-        s.appendChild(X("circle",{cx:x,cy,r:d/2,fill:"var(--fg)"}));
-        if(d>=30) s.appendChild(vt("L",x,cy+1,d*0.42,0));
-      });
     }},
   { name:"COLOR", code:"lm-brand-color", build:s=>{
       s.appendChild(X("circle",{cx:24,cy:24,r:21,fill:"var(--accent)"}));
