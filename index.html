@@ -249,7 +249,7 @@ section{scroll-margin-top:24px}
   </div>
 
   <div class="sec-head" style="margin-top:54px">
-    <span class="sec-no">04</span>
+    <span class="sec-no">05</span>
     <h2>Naming</h2>
     <span class="sec-en">Convention</span>
   </div>
@@ -305,7 +305,7 @@ function spring(){ return { x:0, v:0, t:0 }; }
 function k(s, target, dt, omega, zeta){
   omega = omega || 14; zeta = zeta || 1;
   const o2 = omega*omega, d = 2*zeta*omega;
-  s.v += (d*(target - s.x) - o2*(s.x - target))*dt;   // v += (−2ζω·v − ω²(x−target))·dt
+  s.v += (-d*s.v - o2*(s.x - target))*dt;   // v += (−2ζω·v − ω²(x−target))·dt
   s.x += s.v*dt;
   s.t += dt;
   return s.x;
@@ -436,6 +436,8 @@ botEl.addEventListener("click", ()=>{ nextState(); });
 /* ---------- State machine ---------- */
 function setState(id){
   cur = id;
+  const ix = LOOP.indexOf(id);
+  if(ix>=0) curIx = ix;
   const st = STATES.find(s=>s.id===id);
   $("stateName").textContent = st.name;
   $("stateDesc").textContent = st.desc;
@@ -459,7 +461,6 @@ function nextState(){
 /* ---------- FX render per frame ---------- */
 function renderFX(dt, t){
   const set = (els, fn)=>{ (Array.isArray(els)?els:[els]).forEach((el,i)=>{ if(el) fn(el,i); }); };
-  const off = { thinking:[tDots=>{},0,0], listening:[waveL=>{},0,0] };
   // thinking dots
   set(FX.thinking[0], (d,i)=>{
     const a = t*1.4 + i*Math.PI*2/3;
@@ -489,7 +490,6 @@ function renderFX(dt, t){
     const r = orbit + Math.sin(t*4)*5;
     const a0 = i===0 ? Math.PI*0.94 : Math.PI*0.06;
     const a1 = i===0 ? Math.PI*1.06 : -Math.PI*0.06;
-    const cxp = 120+side*(r-orbit+6);
     el.setAttribute("d", `M ${(120+side*(r-6)).toFixed(1)} 66 A ${r-6} ${r-6} 0 0 ${i===0?1:0} ${(120+side*(r-6)).toFixed(1)} 166`);
   });
   // replying bubble
@@ -717,9 +717,9 @@ function buildGridDemo(){
 /* ---------- Theme invert ---------- */
 const themeBtn = $("themeBtn");
 themeBtn.addEventListener("click", ()=>{
-  const cur = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark";
-  document.documentElement.setAttribute("data-theme", cur);
-  themeBtn.textContent = cur==="dark" ? "反白 Invert" : "反色 Invert";
+  const next = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  themeBtn.textContent = "反色 Invert";
   updateRect();
 });
 
