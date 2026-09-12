@@ -635,11 +635,11 @@ const CATS = [
     { name:"Tools", code:"lm-fn-tools", draw:s=>{ s.appendChild(wl("M 12 16 H 36")); s.appendChild(wl("M 12 24 H 36")); s.appendChild(wl("M 12 32 H 36")); s.appendChild(X("circle",{cx:22,cy:16,r:3,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:29,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:18,cy:32,r:3,fill:"var(--bg)"})); } },
     { name:"Document", code:"lm-fn-document", draw:s=>{ s.appendChild(wr(14,11,20,26,3)); s.appendChild(wl("M 18 19 H 30")); s.appendChild(wl("M 18 24 H 30")); s.appendChild(wl("M 18 29 H 26")); } },
     { name:"Image", code:"lm-fn-image", draw:s=>{ s.appendChild(wr(11,15,26,18,3)); s.appendChild(wl("M 15 30 L 21 23 L 25 27 L 28 24 L 33 29")); s.appendChild(wd(30,19,2.2)); } },
-    { name:"Voice", code:"lm-fn-voice", draw:s=>{ s.appendChild(wr(19,10,10,15,4)); s.appendChild(wl("M 15 22 A 9 9 0 0 0 33 22")); s.appendChild(wl("M 15 29 H 33")); } },
-    { name:"Copy", code:"lm-fn-copy", draw:s=>{ s.appendChild(wr(16,13,18,14,3)); s.appendChild(wr(13,19,18,14,3)); s.appendChild(wd(12,12,2)); } },
+    { name:"Voice", code:"lm-fn-voice", draw:s=>{ s.appendChild(wr(19,9,10,14,4)); s.appendChild(wl("M 15 20 A 9 9 0 0 0 33 20")); s.appendChild(wl("M 24 29 V 33")); s.appendChild(wl("M 19 33 H 29")); } },
+    { name:"Copy", code:"lm-fn-copy", draw:s=>{ s.appendChild(wr(16,13,18,14,3)); s.appendChild(wr(13,19,18,14,3)); } },
     { name:"Export", code:"lm-fn-export", draw:s=>{ s.appendChild(wr(11,18,26,14,2)); s.appendChild(wl("M 24 8 V 17")); s.appendChild(wl("M 19 12 L 24 17 L 29 12")); } },
     { name:"Stop", code:"lm-fn-stop", draw:s=>{ s.appendChild(X("rect",{x:17,y:17,width:14,height:14,rx:3,fill:"var(--bg)"})); } },
-    { name:"Refresh", code:"lm-fn-refresh", draw:s=>{ s.appendChild(wl(arcPath(24,24,10,Math.PI*1.05,Math.PI*2.05))); s.appendChild(wl("M 33.9 22.4 L 29 22.4")); s.appendChild(wf("M 32 19.6 L 28.6 22.4 L 32 25.2 Z")); s.appendChild(wd(24,24,2)); } },
+    { name:"Refresh", code:"lm-fn-refresh", draw:s=>{ s.appendChild(wl(arcPath(24,24,10,Math.PI*1.05,Math.PI*2.05))); s.appendChild(wl("M 33.9 22.4 L 29 22.4")); s.appendChild(wf("M 32 19.6 L 28.6 22.4 L 32 25.2 Z")); } },
     { name:"Delete", code:"lm-fn-delete", draw:s=>{ s.appendChild(wr(14,20,20,15,3)); s.appendChild(wr(16,14,16,5,1.5)); s.appendChild(wl("M 12 20 H 36")); s.appendChild(wl("M 20 24 V 30")); s.appendChild(wl("M 28 24 V 30")); } }
   ]},
   { cn:"Agent States", en:"实时状态 · 助手反馈", items:[
@@ -650,11 +650,11 @@ const CATS = [
     { name:"Replying", code:"lm-status-replying", draw:s=>{ s.appendChild(wr(12,16,24,16,5)); s.appendChild(wf("M 15 32 L 13 37 L 22 32 Z")); s.appendChild(wl("M 17 21 H 31")); s.appendChild(wl("M 17 26 H 26")); } },
     { name:"Done", code:"lm-status-done", draw:s=>{ s.appendChild(wl("M 15 24 L 21 30 L 33 17")); } },
     { name:"Error", code:"lm-status-error", draw:s=>{ s.appendChild(wl("M 16 16 L 32 32")); s.appendChild(wl("M 32 16 L 16 32")); } },
-    { name:"Reminder", code:"lm-status-reminder", draw:s=>{ s.appendChild(wl("M 16 15 C 13 23 11 25 11 28 M 32 15 C 35 23 37 25 37 28 M 11 28 H 37")); s.appendChild(wl("M 24 28 V 32")); s.appendChild(wd(24,35,1.8)); } }
+    { name:"Reminder", code:"lm-status-reminder", draw:s=>{ s.appendChild(wl("M 16 27 V 25 C 16 18 19 14 24 14 C 29 14 32 18 32 25 V 27")); s.appendChild(wl("M 24 14 V 11")); s.appendChild(wl("M 13 27 H 35")); s.appendChild(wl("M 20.5 31 A 3.5 3.5 0 0 0 27.5 31")); } }
   ]},
   { cn:"Quant Flow", en:"量化流程 · 数据运算链路", items:[
     { name:"Input", code:"lm-quant-input", draw:s=>{ s.appendChild(wr(17,16,15,16,3)); s.appendChild(wl("M 8 24 H 20")); s.appendChild(wl("M 15 20 L 20 24 L 15 28")); } },
-    { name:"Parse", code:"lm-quant-parse", draw:s=>{ s.appendChild(wr(13,15,22,18,3)); s.appendChild(wl("M 24 15 V 33")); s.appendChild(wl("M 13 24 H 35")); s.appendChild(wd(24,24,2)); } },
+    { name:"Parse", code:"lm-quant-parse", draw:s=>{ s.appendChild(wl("M 20 16 L 13 24 L 20 32")); s.appendChild(wl("M 28 16 L 35 24 L 28 32")); } },
     { name:"Plan", code:"lm-quant-plan", draw:s=>{ s.appendChild(wl("M 15 24 H 33")); s.appendChild(X("circle",{cx:14,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(wd(24,24,3)); s.appendChild(X("circle",{cx:34,cy:24,r:3,fill:"var(--bg)"})); } },
     { name:"Retrieve", code:"lm-quant-retrieve", draw:s=>{ s.appendChild(wr(13,22,22,11,3)); s.appendChild(wl("M 24 9 V 20")); s.appendChild(wl("M 20 13 L 24 9 L 28 13")); } },
     { name:"Tool", code:"lm-quant-tool", draw:s=>{ s.appendChild(wr(12,14,24,20,3)); s.appendChild(wl("M 17 21 L 21 24 L 17 27")); s.appendChild(wl("M 23 27 H 29")); } },
@@ -665,7 +665,7 @@ const CATS = [
   ]},
   { cn:"System States", en:"系统通用 · 全局提示", items:[
     { name:"Loading", code:"lm-sys-loading", draw:s=>{ s.appendChild(wl(arcPath(24,24,11,-2.4,0.4))); s.appendChild(wd(24,24,2)); } },
-    { name:"Connecting", code:"lm-sys-connecting", draw:s=>{ s.appendChild(X("circle",{cx:14,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:34,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(wl("M 17 24 A 7 7 0 0 1 31 24")); s.appendChild(wd(24,24,2)); } },
+    { name:"Connecting", code:"lm-sys-connecting", draw:s=>{ s.appendChild(X("circle",{cx:14,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:34,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(wl("M 17 24 C 20 16.5 28 16.5 31 24")); s.appendChild(wd(24,18.9,2)); } },
     { name:"Success", code:"lm-sys-success", draw:s=>{ s.appendChild(wc(24,24,10.5)); s.appendChild(wl("M 16.5 24 L 21.5 29 L 31.5 19")); } },
     { name:"Warning", code:"lm-sys-warning", draw:s=>{ s.appendChild(wl("M 24 14 L 35 33 H 13 Z")); s.appendChild(wl("M 24 21 V 27")); s.appendChild(X("circle",{cx:24,cy:31,r:1.8,fill:"var(--bg)"})); } },
     { name:"Lock", code:"lm-sys-lock", draw:s=>{ s.appendChild(wr(15,21,18,13,3)); s.appendChild(wl("M 19 21 V 17 A 5 5 0 0 1 29 17 V 21")); s.appendChild(wd(24,28,1.8)); } },
