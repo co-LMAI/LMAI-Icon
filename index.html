@@ -188,7 +188,7 @@ section{scroll-margin-top:24px}
     <h2>Status &amp; Expressions</h2>
     <span class="sec-en">States</span>
   </div>
-  <p class="sec-lead">以 LMAI 黑圆徽章为面孔，Grok 式白色弧线眼，LMAI 四字母化作嘴巴——无框无嘴，右上角保留青蓝圆点印记。四个字母以独立跳动的节拍演绎十种品牌状态，青蓝状态环与光点同步呼应，极简几何中「呼吸」流转。</p>
+  <p class="sec-lead">以 LMAI 黑圆徽章为面孔，Grok 式白色弧线眼，LMAI 四字母化作嘴巴——无框无嘴，右上角保留青蓝蝴蝶结印记。四个字母以独立跳动的节拍演绎十种品牌状态，青蓝状态环与光点同步呼应，极简几何中「呼吸」流转。</p>
   <div id="stateBar" class="state-bar"></div>
 </section>
 
@@ -504,7 +504,7 @@ function renderFX(dt, t){
   // done check
   set(FX.done, (p)=>{
     const s = 0.6 + 0.4*Math.max(0,Math.sin(t*2.2));
-    p.setAttribute("transform", `translate(184 64) scale(${s})`);
+    p.setAttribute("transform", `translate(191 187) scale(${s})`);
   });
   // remind bell
   set(FX.remind, (p)=>{
@@ -562,10 +562,14 @@ function markSVG(m){
       t.setAttribute("font-family","inherit"); t.textContent = ch;
       svg.appendChild(t);
     });
-    const dot = document.createElementNS(NS,"circle");
-    dot.setAttribute("cx",80); dot.setAttribute("cy",30); dot.setAttribute("r",3.5);
+    const dot = document.createElementNS(NS,"path");
+    dot.setAttribute("d","M 80 30 L 73.5 26.8 L 73.5 33.2 Z M 80 30 L 86.5 26.8 L 86.5 33.2 Z");
     dot.setAttribute("fill","var(--accent)");
     svg.appendChild(dot);
+    const knot = document.createElementNS(NS,"circle");
+    knot.setAttribute("cx",80); knot.setAttribute("cy",30); knot.setAttribute("r",1.5);
+    knot.setAttribute("fill","var(--accent)");
+    svg.appendChild(knot);
   } else {
     const t = document.createElementNS(NS,"text");
     t.setAttribute("x",48); t.setAttribute("y",50);
@@ -575,10 +579,14 @@ function markSVG(m){
     t.setAttribute("letter-spacing",m.letterSpacing);
     t.textContent = m.txt;
     svg.appendChild(t);
-    const dot = document.createElementNS(NS,"circle");
-    dot.setAttribute("cx",80); dot.setAttribute("cy",30); dot.setAttribute("r",3.5);
+    const dot = document.createElementNS(NS,"path");
+    dot.setAttribute("d","M 80 30 L 73.5 26.8 L 73.5 33.2 Z M 80 30 L 86.5 26.8 L 86.5 33.2 Z");
     dot.setAttribute("fill","var(--accent)");
     svg.appendChild(dot);
+    const knot = document.createElementNS(NS,"circle");
+    knot.setAttribute("cx",80); knot.setAttribute("cy",30); knot.setAttribute("r",1.5);
+    knot.setAttribute("fill","var(--accent)");
+    svg.appendChild(knot);
   }
   return svg;
 }
