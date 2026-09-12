@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LMAI — Agent · Quant Icon System</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='34' r='30' fill='%23000'/%3E%3Crect x='12' y='21' width='16' height='14' rx='3.5' fill='none' stroke='%2300E5FF' stroke-width='2'/%3E%3Ctext x='16.5' y='32' text-anchor='middle' font-size='8.5' font-family='Arial,Helvetica,sans-serif' font-weight='800' fill='%23fff'%3EL%3C/text%3E%3Ctext x='23.5' y='32' text-anchor='middle' font-size='8.5' font-family='Arial,Helvetica,sans-serif' font-weight='800' fill='%23fff'%3EM%3C/text%3E%3Crect x='36' y='21' width='16' height='14' rx='3.5' fill='none' stroke='%2300E5FF' stroke-width='2'/%3E%3Ctext x='40.5' y='32' text-anchor='middle' font-size='8.5' font-family='Arial,Helvetica,sans-serif' font-weight='800' fill='%23fff'%3EA%3C/text%3E%3Ctext x='47.5' y='32' text-anchor='middle' font-size='8.5' font-family='Arial,Helvetica,sans-serif' font-weight='800' fill='%23fff'%3EI%3C/text%3E%3Ccircle cx='50' cy='14' r='4' fill='%2300E5FF'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#ffffff;
+  --fg:#000000;
+  --accent:#00E5FF;
+  --ink:#0a0a0a;
+  --line:rgba(0,0,0,.16);
+  --line-soft:rgba(0,0,0,.08);
+  --muted:rgba(0,0,0,.56);
+  --faint:rgba(0,0,0,.38);
+  --card:#f7f7f5;
+  --font:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue","PingFang SC","Microsoft YaHei",Arial,sans-serif;
+}
+html[data-theme="dark"]{
+  --bg:#000000;
+  --fg:#ffffff;
+  --ink:#f4f4f2;
+  --line:rgba(255,255,255,.22);
+  --line-soft:rgba(255,255,255,.10);
+  --muted:rgba(255,255,255,.62);
+  --faint:rgba(255,255,255,.40);
+  --card:#0e0e0c;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
+body{transition:background .45s ease,color .45s ease}
+::selection{background:var(--accent);color:#000}
+button{font-family:inherit}
+/* ===== mast ===== */
+.mast{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 28px;border-bottom:1px solid var(--line-soft)}
+.mast-brand{display:flex;align-items:center;gap:14px}
+.mark-dot{width:13px;height:13px;border-radius:50%;background:var(--fg);position:relative;flex:0 0 auto}
+.mark-dot::after{content:"";position:absolute;right:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.mast-name{font-size:19px;font-weight:800;letter-spacing:.14em}
+.mast-sub{font-size:11px;letter-spacing:.28em;color:var(--muted);font-weight:600;text-transform:uppercase;padding-top:2px}
+.mast-meta{display:flex;align-items:center;gap:12px}
+.tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700;white-space:nowrap}
+.icon-btn{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-weight:700;cursor:pointer;transition:all .18s}
+.icon-btn:hover{border-color:var(--fg);background:var(--fg);color:var(--bg)}
+/* ===== layout shell ===== */
+.shell{max-width:1120px;margin:0 auto;padding:0 28px 90px}
+section{scroll-margin-top:24px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin:74px 0 6px;padding-top:30px;border-top:1px solid var(--line)}
+.sec-head h2{font-size:26px;font-weight:800;letter-spacing:-.01em;margin:0}
+.sec-en{font-size:11px;letter-spacing:.3em;color:var(--faint);font-weight:700;text-transform:uppercase}
+.sec-lead{color:var(--muted);font-size:14px;line-height:1.8;max-width:66ch;margin:4px 0 26px}
+.sec-no{font-size:11px;letter-spacing:.2em;color:var(--faint);font-weight:700;font-variant-numeric:tabular-nums;padding-top:6px}
+/* ===== hero ===== */
+.hero{display:flex;flex-direction:column;align-items:center;padding:56px 0 30px}
+.stage{position:relative;width:min(340px,74vw)}
+.bot-svg{width:100%;height:auto;display:block;cursor:crosshair;touch-action:none}
+.state-chip{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);display:flex;align-items:center;gap:9px;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:8px 16px;white-space:nowrap}
+.state-chip b{font-size:13px;font-weight:800;letter-spacing:.12em}
+.state-chip i{font-style:normal;font-size:11px;color:var(--muted);letter-spacing:.06em}
+.state-chip .led{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 30%,transparent)}
+.hero-hint{font-size:13px;color:var(--muted);text-align:center;line-height:1.9;margin:34px 0 0;max-width:520px}
+.hero-hint b{color:var(--ink);font-weight:700}
+/* ===== state bar ===== */
+.state-bar{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+.state-btn{font-size:11.5px;letter-spacing:.1em;font-weight:700;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:9px 15px;cursor:pointer;transition:all .16s}
+.state-btn:hover{border-color:var(--fg);transform:translateY(-1px)}
+.state-btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.state-btn[aria-pressed="true"] .st-dot{background:var(--accent)}
+.st-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--faint);margin-right:7px;vertical-align:1px;transition:background .16s}
+/* ===== marks grid ===== */
+.mark-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:8px}
+.mark-cell{border:1px solid var(--line-soft);border-radius:6px;padding:18px 12px 14px;display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--card);transition:border-color .18s}
+.mark-cell:hover{border-color:var(--line)}
+.mark-cell svg{width:72px;height:72px;display:block}
+.mark-cell .m-name{font-size:11px;font-weight:800;letter-spacing:.14em}
+.mark-cell .m-code{font-size:10.5px;color:var(--faint);letter-spacing:.08em;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+/* ===== icon system cats ===== */
+.cat-group{margin-top:38px}
+.cat-title{display:flex;align-items:baseline;gap:12px;margin:0 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line-soft)}
+.cat-title .cn{font-size:14.5px;font-weight:800;letter-spacing:.04em}
+.cat-title .en{font-size:10px;letter-spacing:.26em;color:var(--faint);font-weight:700;text-transform:uppercase}
+.cat-title .count{margin-left:auto;font-size:11px;color:var(--faint);letter-spacing:.1em;font-variant-numeric:tabular-nums}
+/* ===== specs ===== */
+.spec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+.spec-card{border:1px solid var(--line-soft);border-radius:6px;background:var(--card);padding:22px 22px 24px}
+.spec-card h3{font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;margin:0 0 18px;color:var(--ink)}
+.color-row{display:flex;gap:10px;margin-bottom:8px}
+.swatch{flex:1;border:1px solid var(--line);border-radius:5px;padding:12px 10px;display:flex;flex-direction:column;gap:8px}
+.swatch .chip{height:44px;border-radius:4px}
+.swatch .hex{font-size:11px;font-weight:700;letter-spacing:.05em;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.swatch .role{font-size:10px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+.chip-black{background:#000;border:1px solid var(--line)}
+.chip-white{background:#fff;border:1px solid var(--line)}
+.chip-cyan{background:#00E5FF}
+.spec-note{font-size:12px;color:var(--muted);line-height:1.8;margin:0}
+.grid-demo{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+.g-cell{aspect-ratio:1;border:1px dashed var(--line);border-radius:3px;display:flex;align-items:center;justify-content:center}
+.g-cell svg{width:70%;height:70%}
+.g-line{display:flex;justify-content:space-between;font-size:11px;padding:7px 0;border-bottom:1px dashed var(--line-soft);letter-spacing:.06em}
+.g-line span:first-child{color:var(--faint);font-weight:600}
+.g-line span:last-child{font-weight:700;font-variant-numeric:tabular-nums}
+/* ===== naming table ===== */
+.naming-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12.5px;margin-top:6px}
+.naming-table th{text-align:left;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:700;padding:0 0 9px}
+.naming-table td{padding:9px 0;border-top:1px solid var(--line-soft);color:var(--muted)}
+.naming-table td:first-child{font-weight:700;color:var(--ink)}
+.naming-table code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11.5px;color:var(--ink);background:var(--line-soft);padding:2px 6px;border-radius:4px;display:inline-block;margin:2px 6px 2px 0;white-space:nowrap}
+.rules-list{margin:8px 0 0;padding:0;list-style:none}
+.rules-list li{font-size:13px;color:var(--muted);line-height:1.85;padding:8px 0 8px 22px;position:relative;border-top:1px solid var(--line-soft)}
+.rules-list li::before{content:"";position:absolute;left:4px;top:15px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.rules-list b{color:var(--ink);font-weight:700}
+/* ===== footer ===== */
+.foot{border-top:1px solid var(--line);margin-top:80px;padding:26px 0 10px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.foot span{font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase;font-weight:600}
+/* ===== responsive ===== */
+@media (max-width:860px){
+  .mark-grid{grid-template-columns:repeat(3,1fr)}
+  .spec-grid{grid-template-columns:1fr}
+  .mast{flex-direction:column;align-items:flex-start;padding:18px 20px}
+  .shell{padding:0 18px 70px}
+  .hero{padding-top:40px}
+  .state-btn,.icon-btn{min-height:44px}
+  .hero-hint{font-size:14px}
+}
+@media (max-width:560px){
+  .mark-grid{grid-template-columns:repeat(2,1fr)}
+  .sec-head{flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="mast-brand">
+    <span class="mark-dot" aria-hidden="true"></span>
+    <span class="mast-name">LMAI</span>
+    <span class="mast-sub">Agent · Quant Icon System</span>
+  </div>
+  <div class="mast-meta">
+    <span class="tag">Interactive · Monochrome + Accent</span>
+    <button id="themeBtn" class="icon-btn" type="button">反白 Invert</button>
+  </div>
+</header>
+
+<div class="shell">
+
+<!-- ===== 01 Hero : LMAI Bot ===== -->
+<section class="hero">
+  <div class="stage">
+    <svg id="bot" class="bot-svg" viewBox="0 0 240 240" role="img" aria-label="LMAI 交互式图标，跟随光标并切换状态表情">
+      <g id="fx"></g>
+      <g id="headG">
+        <circle id="head" cx="120" cy="116" r="88" fill="var(--fg)"/>
+        <circle id="cornerDot" cx="176" cy="60" r="7" fill="var(--accent)"/>
+      </g>
+      <g id="eyeG">
+        <path id="eyeL" d="M -17 -10 Q 0 3 17 -10" fill="none" stroke="var(--bg)" stroke-width="7.5" stroke-linecap="round"/>
+        <path id="eyeR" d="M -17 -10 Q 0 3 17 -10" fill="none" stroke="var(--bg)" stroke-width="7.5" stroke-linecap="round"/>
+      </g>
+      <g id="mouthG" transform="translate(120 156)">
+        <text id="ltxt" x="-15" y="7" text-anchor="middle" fill="var(--bg)" font-family="inherit" font-size="13" font-weight="800">L</text>
+        <text id="mtxt" x="-5" y="7" text-anchor="middle" fill="var(--bg)" font-family="inherit" font-size="13" font-weight="800">M</text>
+        <text id="atxt" x="5" y="7" text-anchor="middle" fill="var(--bg)" font-family="inherit" font-size="13" font-weight="800">A</text>
+        <text id="itxt" x="15" y="7" text-anchor="middle" fill="var(--bg)" font-family="inherit" font-size="13" font-weight="800">I</text>
+      </g>
+    </svg>
+    <div class="state-chip">
+      <span class="led" aria-hidden="true"></span>
+      <b id="stateName">IDLE</b>
+      <i id="stateDesc">等待中</i>
+    </div>
+  </div>
+  <p class="hero-hint">移动光标 —— <b>眼睛跟随</b>；点击角色或下方状态 —— <b>切换状态节拍</b>。四个字母各自独立跳动，角色自动在品牌状态间流转。</p>
+</section>
+
+<!-- ===== 02 Status & Expressions ===== -->
+<section id="states">
+  <div class="sec-head">
+    <span class="sec-no">01</span>
+    <h2>Status &amp; Expressions</h2>
+    <span class="sec-en">States</span>
+  </div>
+  <p class="sec-lead">以 LMAI 黑圆徽章为面孔，Grok 式白色弧线眼，LMAI 四字母化作嘴巴——无框无嘴，右上角保留青蓝圆点印记。四个字母以独立跳动的节拍演绎十种品牌状态，青蓝状态环与光点同步呼应，极简几何中「呼吸」流转。</p>
+  <div id="stateBar" class="state-bar"></div>
+</section>
+
+<!-- ===== 03 Core Marks : Letter System ===== -->
+<section id="marks">
+  <div class="sec-head">
+    <span class="sec-no">02</span>
+    <h2>Core Marks</h2>
+    <span class="sec-en">Letter System</span>
+  </div>
+  <p class="sec-lead">整套系统从 LMAI 字母中生长：字标、单字母、组合标与环形标构成核心标识层。全部以 SVG 精确构建，48px 标准网格、2px 描边、4px 圆角。</p>
+  <div id="markGrid" class="mark-grid"></div>
+</section>
+
+<!-- ===== 03 Icon System : 48 marks ===== -->
+<section id="system">
+  <div class="sec-head">
+    <span class="sec-no">03</span>
+    <h2>Icon System</h2>
+    <span class="sec-en">48 Marks · 6 Families</span>
+  </div>
+  <p class="sec-lead">完整覆盖品牌识别、APP 导航、Agent 功能与状态、Quant 量化流程、系统通用状态六大场景。全部以 48px 标准网格、2px 统一描边构建：纯黑圆容器 + 白色几何线条 + 右上角青蓝记忆点。</p>
+  <div id="catGrid"></div>
+</section>
+
+<!-- ===== 04 Specs ===== -->
+<section id="specs">
+  <div class="sec-head">
+    <span class="sec-no">04</span>
+    <h2>Basic Rules</h2>
+    <span class="sec-en">Specs</span>
+  </div>
+  <p class="sec-lead">极简 · 几何 · 单色 + 强调色。48px 标准网格与三色体系贯穿全部图标、交互状态与品牌资产。</p>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <h3>Color</h3>
+      <div class="color-row">
+        <div class="swatch"><span class="chip chip-black"></span><span class="hex">#000000</span><span class="role">Primary</span></div>
+        <div class="swatch"><span class="chip chip-white"></span><span class="hex">#FFFFFF</span><span class="role">Inverse</span></div>
+        <div class="swatch"><span class="chip chip-cyan"></span><span class="hex">#00E5FF</span><span class="role">Accent</span></div>
+      </div>
+      <p class="spec-note">强调色仅作点缀：眼睛、状态光点与状态环。信息由黑/白承担，青蓝永远克制。</p>
+    </div>
+    <div class="spec-card">
+      <h3>Grid &amp; Stroke</h3>
+      <div class="grid-demo" id="gridDemo"></div>
+      <div class="g-line"><span>Base Grid</span><span>48 × 48 px</span></div>
+      <div class="g-line"><span>Safe Area</span><span>Ø 42 px</span></div>
+      <div class="g-line"><span>Stroke</span><span>2 px</span></div>
+      <div class="g-line"><span>Radius</span><span>4 px</span></div>
+      <div class="g-line"><span>Adapt</span><span>16 / 32 / 64 / 128</span></div>
+    </div>
+    <div class="spec-card">
+      <h3>Rules</h3>
+      <ul class="rules-list">
+        <li><b>黑圆容器</b> — 统一正圆，无椭圆、无异形裁切</li>
+        <li><b>单色优先</b> — 白色几何承担图形，反白版必须可辨识（点右上角切换）</li>
+        <li><b>记忆点</b> — 右上角青蓝点贯穿全部 48 枚，克制点缀</li>
+        <li><b>最小尺寸</b> — 16px 清晰可辨，适配移动端小按钮</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec-head" style="margin-top:54px">
+    <span class="sec-no">04</span>
+    <h2>Naming</h2>
+    <span class="sec-en">Convention</span>
+  </div>
+  <table class="naming-table">
+    <colgroup><col style="width:26%"><col style="width:34%"><col style="width:40%"></colgroup>
+    <thead><tr><th>Token</th><th>Rule</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>lm-brand-</td><td>品牌资产</td><td><code>lm-brand-dot</code> <code>lm-brand-signature</code></td></tr>
+      <tr><td>lm-nav-</td><td>APP 导航</td><td><code>lm-nav-chat</code> <code>lm-nav-workspace</code></td></tr>
+      <tr><td>lm-fn-</td><td>Agent 功能</td><td><code>lm-fn-new</code> <code>lm-fn-export</code></td></tr>
+      <tr><td>lm-status-</td><td>状态表情</td><td><code>lm-status-thinking</code></td></tr>
+      <tr><td>lm-quant-</td><td>量化流程</td><td><code>lm-quant-backtest</code></td></tr>
+      <tr><td>lm-sys-</td><td>系统通用</td><td><code>lm-sys-loading</code></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<footer class="foot">
+  <span>LMAI Agent · Quant Icon System</span>
+  <span>Inspired by Grok Bot (xAI) · LMAI is an independent original brand</span>
+  <span>Design language: Monochrome + #00E5FF</span>
+</footer>
+</div>
+
+<script>
+/* ============================================================
+   LMAI Interactive Icon — independent letter bounce + spring physics
+   Architecture modeled after the Grok bot icon reproduction:
+   shapes are data (letter offsets), motion is a critically-damped
+   spring inside a single requestAnimationFrame loop.
+   ============================================================ */
+"use strict";
+const $ = (id) => document.getElementById(id);
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- State machine ---------- */
+const STATES = [
+  { id:"idle",       name:"IDLE",       desc:"等待中",     eye:[0,0],   bounce:[0.55, 2.2] },
+  { id:"thinking",   name:"THINKING",   desc:"思考中",     eye:[0,-4],  bounce:[1.6,  1.6] },
+  { id:"listening",  name:"LISTENING",  desc:"聆听中",     eye:[0,0],   bounce:[0.9,  1.8] },
+  { id:"generating", name:"GENERATING", desc:"生成中",     eye:[0,-2],  bounce:[2.0,  2.4] },
+  { id:"replying",   name:"REPLYING",   desc:"回复中",     eye:[0,0],   bounce:[1.2,  1.8] },
+  { id:"done",       name:"DONE",       desc:"已完成",     eye:[0,-2],  bounce:[1.0,  1.6] },
+  { id:"error",      name:"ERROR",      desc:"出错了",     eye:[2,2],   bounce:[4.0,  1.2] },
+  { id:"remind",     name:"REMINDER",   desc:"提醒你",     eye:[0,0],   bounce:[1.4,  2.6] },
+  { id:"searching",  name:"SEARCHING",  desc:"搜索中",     eye:[0,0],   bounce:[1.8,  1.6] },
+  { id:"ok",         name:"OK",         desc:"一切正常",   eye:[0,-2],  bounce:[0.7,  1.8] }
+];
+const LOOP = ["idle","thinking","listening","generating","replying","done","idle","searching","remind","ok"];
+
+/* ---------- Spring physics (critically damped) ---------- */
+function spring(){ return { x:0, v:0, t:0 }; }
+function k(s, target, dt, omega, zeta){
+  omega = omega || 14; zeta = zeta || 1;
+  const o2 = omega*omega, d = 2*zeta*omega;
+  s.v += (d*(target - s.x) - o2*(s.x - target))*dt;   // v += (−2ζω·v − ω²(x−target))·dt
+  s.x += s.v*dt;
+  s.t += dt;
+  return s.x;
+}
+/* ---------- Letter bounce : four letters dance independently ---------- */
+const LETTERS = [
+  { id:"ltxt", x:-20, phase:0 },
+  { id:"mtxt", x:-6.5,  phase:Math.PI/2 },
+  { id:"atxt", x:6.5, phase:Math.PI },
+  { id:"itxt", x:20,  phase:Math.PI*1.5 }
+];
+function applyBounce(dt, ph){
+  const st = STATES.find(s=>s.id===cur);
+  const fr = (st && st.bounce) ? st.bounce[0] : 0.7;
+  const am = (st && st.bounce && !REDUCED) ? st.bounce[1] : 0;
+  LETTERS.forEach(lt=>{
+    const by = Math.sin(ph*fr*2*Math.PI + lt.phase) * am;
+    $(lt.id).setAttribute("transform", `translate(${lt.x.toFixed(1)} ${by.toFixed(1)})`);
+  });
+}
+
+/* ---------- FX : per-state ring effects (built once) ---------- */
+const orbit = 106;
+const FX = {};
+function fxColor(){ return "var(--accent)"; }
+function buildFX(){
+  const g = $("fx");
+  const headR = 88, orbit = 106;
+  // thinking: 3 orbiting dots
+  const tDots = [];
+  for(let i=0;i<3;i++){
+    const c = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    c.setAttribute("r",4.5); c.setAttribute("fill",fxColor());
+    g.appendChild(c); tDots.push(c);
+  }
+  // generating: progress arc
+  const genArc = document.createElementNS("http://www.w3.org/2000/svg","path");
+  genArc.setAttribute("fill","none"); genArc.setAttribute("stroke",fxColor());
+  genArc.setAttribute("stroke-width",4); genArc.setAttribute("stroke-linecap","round");
+  g.appendChild(genArc);
+  // searching: radar arc + sweep dot
+  const radArc = document.createElementNS("http://www.w3.org/2000/svg","path");
+  radArc.setAttribute("fill","none"); radArc.setAttribute("stroke",fxColor());
+  radArc.setAttribute("stroke-width",3); radArc.setAttribute("stroke-linecap","round");
+  g.appendChild(radArc);
+  const radDot = document.createElementNS("http://www.w3.org/2000/svg","circle");
+  radDot.setAttribute("r",4); radDot.setAttribute("fill",fxColor());
+  g.appendChild(radDot);
+  // listening: two wave arcs
+  const waveL = document.createElementNS("http://www.w3.org/2000/svg","path");
+  const waveR = document.createElementNS("http://www.w3.org/2000/svg","path");
+  waveL.setAttribute("fill","none"); waveL.setAttribute("stroke",fxColor());
+  waveR.setAttribute("fill","none"); waveR.setAttribute("stroke",fxColor());
+  waveL.setAttribute("stroke-width",3.5); waveR.setAttribute("stroke-width",3.5);
+  waveL.setAttribute("stroke-linecap","round"); waveR.setAttribute("stroke-linecap","round");
+  g.appendChild(waveL); g.appendChild(waveR);
+  // replying: bubble top-right
+  const bubble = document.createElementNS("http://www.w3.org/2000/svg","g");
+  const bRect = document.createElementNS("http://www.w3.org/2000/svg","rect");
+  bRect.setAttribute("x",-30); bRect.setAttribute("y",-22); bRect.setAttribute("width",42);
+  bRect.setAttribute("height",27); bRect.setAttribute("rx",7); bRect.setAttribute("fill",fxColor());
+  const bTail = document.createElementNS("http://www.w3.org/2000/svg","path");
+  bTail.setAttribute("d","M -2 4 L 6 15 L 12 4 Z"); bTail.setAttribute("fill",fxColor());
+  const bDot = document.createElementNS("http://www.w3.org/2000/svg","circle");
+  bDot.setAttribute("cx",-13); bDot.setAttribute("cy",-8); bDot.setAttribute("r",2.6); bDot.setAttribute("fill","#fff");
+  const bDot2 = bDot.cloneNode(); bDot2.setAttribute("cx",-4);
+  const bDot3 = bDot.cloneNode(); bDot3.setAttribute("cx",5);
+  bubble.appendChild(bRect); bubble.appendChild(bTail);
+  bubble.appendChild(bDot); bubble.appendChild(bDot2); bubble.appendChild(bDot3);
+  g.appendChild(bubble);
+  // done: check mark
+  const check = document.createElementNS("http://www.w3.org/2000/svg","path");
+  check.setAttribute("d","M -14 0 L -5 9 L 15 -9"); check.setAttribute("fill","none");
+  check.setAttribute("stroke",fxColor()); check.setAttribute("stroke-width",5);
+  check.setAttribute("stroke-linecap","round"); check.setAttribute("stroke-linejoin","round");
+  g.appendChild(check);
+  // error: x ring
+  const errRing = document.createElementNS("http://www.w3.org/2000/svg","path");
+  errRing.setAttribute("d","M 120 2 A 106 106 0 1 1 118 2"); errRing.setAttribute("fill","none");
+  errRing.setAttribute("stroke",fxColor()); errRing.setAttribute("stroke-width",3.5);
+  errRing.setAttribute("stroke-linecap","round");
+  g.appendChild(errRing);
+  // remind: bell arc
+  const bell = document.createElementNS("http://www.w3.org/2000/svg","path");
+  bell.setAttribute("d","M -13 -18 C -18 -4 -6 -4 -6 2 M 13 -18 C 18 -4 6 -4 6 2 M -10 2 L 10 2 M 0 8 A 3 3 0 0 0 2.6 6.5");
+  bell.setAttribute("fill","none"); bell.setAttribute("stroke",fxColor());
+  bell.setAttribute("stroke-width",3.5); bell.setAttribute("stroke-linecap","round"); bell.setAttribute("stroke-linejoin","round");
+  g.appendChild(bell);
+
+  FX.thinking=[tDots]; FX.generating=[genArc]; FX.searching=[radArc,radDot];
+  FX.listening=[waveL,waveR]; FX.replying=[bubble]; FX.done=[check];
+  FX.error=[errRing]; FX.remind=[bell];
+}
+function arcPath(cx,cy,r,a0,a1){
+  const x0=cx+r*Math.cos(a0), y0=cy+r*Math.sin(a0);
+  const x1=cx+r*Math.cos(a1), y1=cy+r*Math.sin(a1);
+  const large = (a1-a0)>Math.PI?1:0;
+  return `M ${x0.toFixed(1)} ${y0.toFixed(1)} A ${r} ${r} 0 ${large} 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+}
+
+/* ---------- Runtime state ---------- */
+let cur = "idle";
+let curIx = 0;
+const eye = { lx:spring(), ly:spring(), rx:spring(), ry:spring() };
+const look = { tx:0, ty:0 };
+let phase = 0, hold = 0, autoNext = 2.2;
+let headSquash = spring(), headDx = spring(), headDy = spring(), headRot = spring();
+let bounce = 0, shake = 0, nod = 0, float = 0;
+
+/* ---------- Pointer interaction ---------- */
+const botEl = $("bot");
+let botRect = botEl.getBoundingClientRect();
+function updateRect(){ botRect = botEl.getBoundingClientRect(); }
+addEventListener("resize", updateRect);
+botEl.addEventListener("pointermove", (e)=>{
+  updateRect();
+  const cx = botRect.left + botRect.width/2, cy = botRect.top + botRect.height/2;
+  const scale = 240/botRect.width;
+  let dx = (e.clientX - cx)*scale, dy = (e.clientY - cy)*scale;
+  const lim = 46;
+  const m = Math.hypot(dx,dy)||1, over = Math.max(0,(m-lim)/m);
+  dx -= dx*over; dy -= dy*over;
+  look.tx = dx; look.ty = dy;
+});
+botEl.addEventListener("pointerleave", ()=>{ look.tx = 0; look.ty = 0; });
+botEl.addEventListener("click", ()=>{ nextState(); });
+
+/* ---------- State machine ---------- */
+function setState(id){
+  cur = id;
+  const st = STATES.find(s=>s.id===id);
+  $("stateName").textContent = st.name;
+  $("stateDesc").textContent = st.desc;
+  document.querySelectorAll(".state-btn").forEach(b=>{
+    b.setAttribute("aria-pressed", b.dataset.id===id ? "true" : "false");
+  });
+  if(st.id==="done") bounce = 1;
+  if(st.id==="error") shake = 1;
+  if(st.id==="ok") nod = 1;
+  if(st.id==="remind") bounce = 0.6;
+  // extra eye offset per state
+  eyeExtra = st.eye;
+}
+let eyeExtra = [0,0];
+function nextState(){
+  curIx = (curIx+1) % LOOP.length;
+  setState(LOOP[curIx]);
+  hold = 0;
+}
+
+/* ---------- FX render per frame ---------- */
+function renderFX(dt, t){
+  const set = (els, fn)=>{ (Array.isArray(els)?els:[els]).forEach((el,i)=>{ if(el) fn(el,i); }); };
+  const off = { thinking:[tDots=>{},0,0], listening:[waveL=>{},0,0] };
+  // thinking dots
+  set(FX.thinking[0], (d,i)=>{
+    const a = t*1.4 + i*Math.PI*2/3;
+    d.setAttribute("cx", (120 + Math.cos(a)*orbit));
+    d.setAttribute("cy", (116 + Math.sin(a)*orbit));
+  });
+  // generating progress arc
+  set(FX.generating, (p)=>{
+    const frac = (Math.sin(t*1.1)*0.5+0.5);
+    const a0 = -Math.PI/2 + t*1.6, a1 = a0 + 0.15 + frac*Math.PI*1.7;
+    p.setAttribute("d", arcPath(120,116,orbit,a0,a1));
+  });
+  // searching radar
+  set(FX.searching, (el,i)=>{
+    if(i===0){
+      const a = t*1.8;
+      el.setAttribute("d", arcPath(120,116,orbit,a,a+Math.PI*1.5));
+    } else {
+      const a = t*1.8 + Math.PI*1.5;
+      el.setAttribute("cx", 120+Math.cos(a)*orbit);
+      el.setAttribute("cy", 116+Math.sin(a)*orbit);
+    }
+  });
+  // listening waves
+  set(FX.listening, (el,i)=>{
+    const side = i===0?-1:1;
+    const r = orbit + Math.sin(t*4)*5;
+    const a0 = i===0 ? Math.PI*0.94 : Math.PI*0.06;
+    const a1 = i===0 ? Math.PI*1.06 : -Math.PI*0.06;
+    const cxp = 120+side*(r-orbit+6);
+    el.setAttribute("d", `M ${(120+side*(r-6)).toFixed(1)} 66 A ${r-6} ${r-6} 0 0 ${i===0?1:0} ${(120+side*(r-6)).toFixed(1)} 166`);
+  });
+  // replying bubble
+  set(FX.replying, (g)=>{
+    const p = Math.min(1, Math.max(0, (Math.sin(t*1.2)*0.5+0.5)*2-0.2));
+    g.setAttribute("transform", `translate(${120+92} ${116-88}) scale(${0.5+0.5*p})`);
+  });
+  // done check
+  set(FX.done, (p)=>{
+    const s = 0.6 + 0.4*Math.max(0,Math.sin(t*2.2));
+    p.setAttribute("transform", `translate(184 64) scale(${s})`);
+  });
+  // remind bell
+  set(FX.remind, (p)=>{
+    p.setAttribute("transform", `translate(120 24) rotate(${Math.sin(t*6)*8})`);
+  });
+}
+
+/* ---------- Builders ---------- */
+function buildStateBar(){
+  const bar = $("stateBar");
+  STATES.forEach(st=>{
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "state-btn";
+    b.dataset.id = st.id;
+    b.setAttribute("aria-pressed","false");
+    const d = document.createElement("span");
+    d.className = "st-dot";
+    b.appendChild(d);
+    b.appendChild(document.createTextNode(st.name));
+    b.addEventListener("click", ()=>{ setState(st.id); hold = 0; });
+    bar.appendChild(b);
+  });
+}
+
+/* ---------- Core marks (letter system, SVG-built) ---------- */
+const MARKS = [
+  { id:"wordmark", name:"WORDMARK", code:"lm-mark-wordmark", kind:"text", txt:"LMAI", size:24, letterSpacing:2 },
+  { id:"l", name:"L", code:"lm-mark-l", kind:"text", txt:"L", size:44, letterSpacing:0 },
+  { id:"m", name:"M", code:"lm-mark-m", kind:"text", txt:"M", size:44, letterSpacing:0 },
+  { id:"a", name:"A", code:"lm-mark-a", kind:"text", txt:"A", size:44, letterSpacing:0 },
+  { id:"i", name:"I", code:"lm-mark-i", kind:"text", txt:"I", size:44, letterSpacing:0 },
+  { id:"ai", name:"AI", code:"lm-mark-ai", kind:"text", txt:"AI", size:34, letterSpacing:0 },
+  { id:"lm", name:"LM", code:"lm-mark-lm", kind:"text", txt:"LM", size:34, letterSpacing:0 },
+  { id:"ring", name:"RING", code:"lm-mark-ring", kind:"ring", txt:"LMAI", size:16, letterSpacing:0 }
+];
+function markSVG(m){
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(NS,"svg");
+  svg.setAttribute("viewBox","0 0 96 96");
+  const circle = document.createElementNS(NS,"circle");
+  circle.setAttribute("cx",48); circle.setAttribute("cy",48); circle.setAttribute("r",44);
+  circle.setAttribute("fill","var(--fg)");
+  svg.appendChild(circle);
+  if(m.kind==="ring"){
+    const letters = m.txt.split("");
+    letters.forEach((ch,i)=>{
+      const a = -Math.PI/2 + i*Math.PI*2/letters.length;
+      const x = 48 + Math.cos(a)*27, y = 48 + Math.sin(a)*27;
+      const t = document.createElementNS(NS,"text");
+      t.setAttribute("x",x); t.setAttribute("y",y+5);
+      t.setAttribute("text-anchor","middle"); t.setAttribute("dominant-baseline","middle");
+      t.setAttribute("font-size",m.size); t.setAttribute("font-weight","800");
+      t.setAttribute("fill", i===0 ? "var(--accent)" : "var(--bg)");
+      t.setAttribute("font-family","inherit"); t.textContent = ch;
+      svg.appendChild(t);
+    });
+    const dot = document.createElementNS(NS,"circle");
+    dot.setAttribute("cx",80); dot.setAttribute("cy",30); dot.setAttribute("r",3.5);
+    dot.setAttribute("fill","var(--accent)");
+    svg.appendChild(dot);
+  } else {
+    const t = document.createElementNS(NS,"text");
+    t.setAttribute("x",48); t.setAttribute("y",50);
+    t.setAttribute("text-anchor","middle"); t.setAttribute("dominant-baseline","middle");
+    t.setAttribute("font-size",m.size); t.setAttribute("font-weight","800");
+    t.setAttribute("fill","var(--bg)"); t.setAttribute("font-family","inherit");
+    t.setAttribute("letter-spacing",m.letterSpacing);
+    t.textContent = m.txt;
+    svg.appendChild(t);
+    const dot = document.createElementNS(NS,"circle");
+    dot.setAttribute("cx",80); dot.setAttribute("cy",30); dot.setAttribute("r",3.5);
+    dot.setAttribute("fill","var(--accent)");
+    svg.appendChild(dot);
+  }
+  return svg;
+}
+function buildMarks(){
+  const grid = $("markGrid");
+  MARKS.forEach(m=>{
+    const cell = document.createElement("div");
+    cell.className = "mark-cell";
+    cell.appendChild(markSVG(m));
+    const n = document.createElement("div"); n.className="m-name"; n.textContent = m.name;
+    const c = document.createElement("div"); c.className="m-code"; c.textContent = m.code;
+    cell.appendChild(n); cell.appendChild(c);
+    grid.appendChild(cell);
+  });
+}
+
+/* ---------- 48-icon system (6 families, SVG-built) ---------- */
+const NSX = "http://www.w3.org/2000/svg";
+function X(tag,a){ const e=document.createElementNS(NSX,tag); for(const k in a) e.setAttribute(k,a[k]); return e; }
+function wl(d){ return X("path",{d,fill:"none",stroke:"var(--bg)","stroke-width":2,"stroke-linecap":"round","stroke-linejoin":"round"}); }
+function wf(d){ return X("path",{d,fill:"var(--bg)"}); }
+function wr(x,y,w,h,r){ return X("rect",{x,y,width:w,height:h,rx:r||0,fill:"none",stroke:"var(--bg)","stroke-width":2}); }
+function wc(cx,cy,r){ return X("circle",{cx,cy,r,fill:"none",stroke:"var(--bg)","stroke-width":2}); }
+function wd(cx,cy,r){ return X("circle",{cx,cy,r:r||2.5,fill:"var(--accent)"}); }
+function wt(txt,x,y,fs,ls){ const t=X("text",{x,y,"text-anchor":"middle","dominant-baseline":"middle","font-size":fs||10,"font-weight":800,fill:"var(--bg)","font-family":"inherit","letter-spacing":ls||0}); t.textContent=txt; return t; }
+const CATS = [
+  { cn:"Brand Assets", en:"品牌资产 · 品牌识别", items:[
+    { name:"LMAI", code:"lm-brand-wordmark", draw:s=>{ s.appendChild(wt("LMAI",24,26,11,1)); } },
+    { name:"L", code:"lm-brand-l", draw:s=>{ s.appendChild(wt("L",24,26,20)); } },
+    { name:"M", code:"lm-brand-m", draw:s=>{ s.appendChild(wt("M",24,26,20)); } },
+    { name:"AI", code:"lm-brand-ai", draw:s=>{ s.appendChild(wt("AI",24,26,14)); } },
+    { name:"Signature", code:"lm-brand-signature", draw:s=>{ s.appendChild(wt("LMAI",24,21,9,1)); s.appendChild(wl("M 7 31 Q 16 37 24 31 T 41 31")); s.appendChild(wd(41,31,2)); } },
+    { name:"Dot", code:"lm-brand-dot", draw:s=>{ s.appendChild(wc(24,24,9)); s.appendChild(wd(24,24,3.5)); } },
+    { name:"Link", code:"lm-brand-link", draw:s=>{ s.appendChild(wc(18,24,8)); s.appendChild(wc(30,24,8)); s.appendChild(wd(24,24,2)); } },
+    { name:"Memory", code:"lm-brand-memory", draw:s=>{ s.appendChild(wc(24,24,10)); s.appendChild(X("circle",{cx:18,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:24,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(wd(30,24,2)); } },
+    { name:"Response", code:"lm-brand-response", draw:s=>{ s.appendChild(wr(12,16,24,16,5)); s.appendChild(wf("M 15 32 L 13 36 L 21 32 Z")); s.appendChild(X("circle",{cx:17,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:22,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(wd(27,24,2)); } }
+  ]},
+  { cn:"App Navigation", en:"一级导航 · 底部 Tab / 侧边栏", items:[
+    { name:"Chat", code:"lm-nav-chat", draw:s=>{ s.appendChild(wr(12,16,24,16,5)); s.appendChild(wf("M 15 32 L 13 37 L 22 32 Z")); s.appendChild(X("circle",{cx:17.5,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:22.5,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(wd(27.5,24,2)); } },
+    { name:"Workspace", code:"lm-nav-workspace", draw:s=>{ s.appendChild(wl("M 12 24 H 36")); s.appendChild(wl("M 24 12 V 36")); s.appendChild(wd(17,17,2.2)); } },
+    { name:"Search", code:"lm-nav-search", draw:s=>{ s.appendChild(wc(20,20,7)); s.appendChild(wl("M 25 25 L 34 34")); s.appendChild(wd(26,14,2)); } },
+    { name:"Memory", code:"lm-nav-memory", draw:s=>{ s.appendChild(wc(24,24,9)); s.appendChild(X("circle",{cx:18.5,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:24,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(wd(29.5,24,2)); } },
+    { name:"History", code:"lm-nav-history", draw:s=>{ s.appendChild(wc(19,24,8)); s.appendChild(wl("M 19 24 V 18.5")); s.appendChild(wl("M 19 24 L 24.5 26.5")); s.appendChild(wd(33,14,2)); } },
+    { name:"Settings", code:"lm-nav-settings", draw:s=>{ s.appendChild(wc(22,22,5.5)); s.appendChild(wl("M 22 13.5 V 11")); s.appendChild(wl("M 30.5 22 H 33")); s.appendChild(wl("M 22 30.5 V 33")); s.appendChild(wl("M 13.5 22 H 11")); s.appendChild(wd(22,22,2)); } }
+  ]},
+  { cn:"Agent Functions", en:"功能操作 · 会话 / 工具 / 内容", items:[
+    { name:"New", code:"lm-fn-new", draw:s=>{ s.appendChild(wl("M 24 14 V 34")); s.appendChild(wl("M 14 24 H 34")); s.appendChild(wd(37,11,2)); } },
+    { name:"Tools", code:"lm-fn-tools", draw:s=>{ s.appendChild(wc(18,18,6.5)); s.appendChild(wl("M 23 23 L 33 33")); s.appendChild(wd(13,33,2)); } },
+    { name:"Document", code:"lm-fn-document", draw:s=>{ s.appendChild(wr(14,11,20,26,3)); s.appendChild(wl("M 18 19 H 30")); s.appendChild(wl("M 18 24 H 30")); s.appendChild(wl("M 18 29 H 26")); s.appendChild(wd(36,12,2)); } },
+    { name:"Image", code:"lm-fn-image", draw:s=>{ s.appendChild(wr(11,15,26,18,3)); s.appendChild(wl("M 15 30 L 21 23 L 25 27 L 28 24 L 33 29")); s.appendChild(wd(30,19,2.2)); } },
+    { name:"Voice", code:"lm-fn-voice", draw:s=>{ s.appendChild(wr(19,10,10,15,4)); s.appendChild(wl("M 15 22 A 9 9 0 0 0 33 22")); s.appendChild(wl("M 15 29 H 33")); s.appendChild(wd(36,12,2)); } },
+    { name:"Copy", code:"lm-fn-copy", draw:s=>{ s.appendChild(wr(16,13,18,14,3)); s.appendChild(wr(13,19,18,14,3)); s.appendChild(wd(12,12,2)); } },
+    { name:"Export", code:"lm-fn-export", draw:s=>{ s.appendChild(wr(11,18,26,14,2)); s.appendChild(wl("M 24 8 V 17")); s.appendChild(wl("M 19 12 L 24 17 L 29 12")); s.appendChild(wd(36,10,2)); } },
+    { name:"Stop", code:"lm-fn-stop", draw:s=>{ s.appendChild(X("rect",{x:17,y:17,width:14,height:14,rx:3,fill:"var(--bg)"})); s.appendChild(wd(36,12,2)); } },
+    { name:"Refresh", code:"lm-fn-refresh", draw:s=>{ s.appendChild(wl(arcPath(24,24,10,Math.PI*1.05,Math.PI*2.05))); s.appendChild(wl("M 33.9 22.4 L 29 22.4")); s.appendChild(wf("M 32 19.6 L 28.6 22.4 L 32 25.2 Z")); s.appendChild(wd(24,24,2)); } },
+    { name:"Delete", code:"lm-fn-delete", draw:s=>{ s.appendChild(wr(14,20,20,15,3)); s.appendChild(wr(16,14,16,5,1.5)); s.appendChild(wl("M 12 20 H 36")); s.appendChild(wl("M 20 24 V 30")); s.appendChild(wl("M 28 24 V 30")); s.appendChild(wd(37,12,2)); } }
+  ]},
+  { cn:"Agent States", en:"实时状态 · 助手反馈", items:[
+    { name:"Idle", code:"lm-status-idle", draw:s=>{ s.appendChild(X("circle",{cx:24,cy:24,r:3.5,fill:"var(--bg)"})); } },
+    { name:"Listening", code:"lm-status-listening", draw:s=>{ s.appendChild(wl("M 15 18 A 8 8 0 0 0 15 30")); s.appendChild(wl("M 10 14 A 13 13 0 0 0 10 34")); s.appendChild(wd(24,24,2)); } },
+    { name:"Thinking", code:"lm-status-thinking", draw:s=>{ s.appendChild(X("circle",{cx:17,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:24,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(wd(31,24,3)); } },
+    { name:"Generating", code:"lm-status-generating", draw:s=>{ s.appendChild(wl(arcPath(24,24,11,-2.2,0.9))); s.appendChild(wd(24,24,2)); } },
+    { name:"Replying", code:"lm-status-replying", draw:s=>{ s.appendChild(wr(12,16,24,16,5)); s.appendChild(wf("M 15 32 L 13 37 L 22 32 Z")); s.appendChild(X("circle",{cx:17.5,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:22.5,cy:24,r:2,fill:"var(--bg)"})); s.appendChild(wd(27.5,24,2)); } },
+    { name:"Done", code:"lm-status-done", draw:s=>{ s.appendChild(wl("M 15 24 L 21 30 L 33 17")); s.appendChild(wd(36,11,2)); } },
+    { name:"Error", code:"lm-status-error", draw:s=>{ s.appendChild(wl("M 16 16 L 32 32")); s.appendChild(wl("M 32 16 L 16 32")); s.appendChild(wd(36,11,2)); } },
+    { name:"Reminder", code:"lm-status-reminder", draw:s=>{ s.appendChild(wl("M 16 15 C 13 23 11 25 11 28 M 32 15 C 35 23 37 25 37 28 M 11 28 H 37")); s.appendChild(wl("M 24 28 V 32")); s.appendChild(wd(24,35,1.8)); } }
+  ]},
+  { cn:"Quant Flow", en:"量化流程 · 数据运算链路", items:[
+    { name:"Input", code:"lm-quant-input", draw:s=>{ s.appendChild(wr(17,16,15,16,3)); s.appendChild(wl("M 8 24 H 20")); s.appendChild(wl("M 15 20 L 20 24 L 15 28")); s.appendChild(wd(36,12,2)); } },
+    { name:"Parse", code:"lm-quant-parse", draw:s=>{ s.appendChild(wr(13,15,22,18,3)); s.appendChild(wl("M 24 15 V 33")); s.appendChild(wl("M 13 24 H 35")); s.appendChild(wd(24,24,2)); } },
+    { name:"Plan", code:"lm-quant-plan", draw:s=>{ s.appendChild(wl("M 15 24 H 33")); s.appendChild(X("circle",{cx:14,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(wd(24,24,3)); s.appendChild(X("circle",{cx:34,cy:24,r:3,fill:"var(--bg)"})); } },
+    { name:"Retrieve", code:"lm-quant-retrieve", draw:s=>{ s.appendChild(wr(13,22,22,11,3)); s.appendChild(wl("M 24 9 V 20")); s.appendChild(wl("M 20 13 L 24 9 L 28 13")); s.appendChild(wd(36,11,2)); } },
+    { name:"Tool", code:"lm-quant-tool", draw:s=>{ s.appendChild(wc(17,17,6.5)); s.appendChild(wl("M 22 22 L 31 31")); s.appendChild(wd(13,33,2)); } },
+    { name:"Backtest", code:"lm-quant-backtest", draw:s=>{ s.appendChild(wc(19,21,7.5)); s.appendChild(wl("M 19 21 V 15.5")); s.appendChild(wl("M 19 21 L 24.5 23.5")); s.appendChild(wl("M 32 14 A 12 12 0 1 1 34 26")); s.appendChild(wd(32,14,2)); } },
+    { name:"Risk Check", code:"lm-quant-risk", draw:s=>{ s.appendChild(wl("M 24 11 L 33 15 V 24 C 33 31 29 34 24 37 C 19 34 15 31 15 24 V 15 Z")); s.appendChild(wl("M 19 24 L 23 28 L 29 21")); s.appendChild(wd(36,12,2)); } },
+    { name:"Output", code:"lm-quant-output", draw:s=>{ s.appendChild(wr(16,16,15,16,3)); s.appendChild(wl("M 28 24 H 40")); s.appendChild(wl("M 35 20 L 40 24 L 35 28")); s.appendChild(wd(36,12,2)); } },
+    { name:"Finish", code:"lm-quant-finish", draw:s=>{ s.appendChild(wl("M 15 12 V 34")); s.appendChild(wf("M 15 12 L 31 16 L 15 20 Z")); s.appendChild(wd(31,16,2)); } }
+  ]},
+  { cn:"System States", en:"系统通用 · 全局提示", items:[
+    { name:"Loading", code:"lm-sys-loading", draw:s=>{ s.appendChild(wl(arcPath(24,24,11,-2.4,0.4))); s.appendChild(wd(24,24,2)); } },
+    { name:"Connecting", code:"lm-sys-connecting", draw:s=>{ s.appendChild(X("circle",{cx:14,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(X("circle",{cx:34,cy:24,r:3,fill:"var(--bg)"})); s.appendChild(wl("M 17 24 A 7 7 0 0 1 31 24")); s.appendChild(wd(24,24,2)); } },
+    { name:"Success", code:"lm-sys-success", draw:s=>{ s.appendChild(wc(24,24,10.5)); s.appendChild(wl("M 16.5 24 L 21.5 29 L 31.5 19")); s.appendChild(wd(36,12,2)); } },
+    { name:"Warning", code:"lm-sys-warning", draw:s=>{ s.appendChild(wl("M 24 14 L 35 33 H 13 Z")); s.appendChild(wl("M 24 21 V 27")); s.appendChild(X("circle",{cx:24,cy:31,r:1.8,fill:"var(--bg)"})); s.appendChild(wd(36,12,2)); } },
+    { name:"Lock", code:"lm-sys-lock", draw:s=>{ s.appendChild(wr(15,21,18,13,3)); s.appendChild(wl("M 19 21 V 17 A 5 5 0 0 1 29 17 V 21")); s.appendChild(wd(24,28,1.8)); } },
+    { name:"Empty", code:"lm-sys-empty", draw:s=>{ s.appendChild(X("rect",{x:14,y:14,width:20,height:20,rx:4,fill:"none",stroke:"var(--bg)","stroke-width":2,"stroke-dasharray":"3 3"})); s.appendChild(wd(24,24,2.5)); } }
+  ]}
+];
+function iconCell(it){
+  const cell = document.createElement("div"); cell.className = "mark-cell";
+  const svg = document.createElementNS(NSX,"svg");
+  svg.setAttribute("viewBox","0 0 48 48");
+  svg.appendChild(X("circle",{cx:24,cy:24,r:21,fill:"var(--fg)"}));
+  it.draw(svg);
+  svg.appendChild(X("circle",{cx:40,cy:10,r:2.5,fill:"var(--accent)"}));
+  cell.appendChild(svg);
+  const n = document.createElement("div"); n.className = "m-name"; n.textContent = it.name;
+  const c = document.createElement("div"); c.className = "m-code"; c.textContent = it.code;
+  cell.appendChild(n); cell.appendChild(c);
+  return cell;
+}
+function buildIcons(){
+  const grid = $("catGrid");
+  CATS.forEach(cat=>{
+    const group = document.createElement("div"); group.className = "cat-group";
+    const t = document.createElement("div"); t.className = "cat-title";
+    const cn = document.createElement("span"); cn.className = "cn"; cn.textContent = cat.cn;
+    const en = document.createElement("span"); en.className = "en"; en.textContent = cat.en;
+    const ct = document.createElement("span"); ct.className = "count"; ct.textContent = cat.items.length + " marks";
+    t.appendChild(cn); t.appendChild(en); t.appendChild(ct);
+    group.appendChild(t);
+    const g = document.createElement("div"); g.className = "mark-grid";
+    cat.items.forEach(it=>g.appendChild(iconCell(it)));
+    group.appendChild(g);
+    grid.appendChild(group);
+  });
+}
+
+/* ---------- Grid demo ---------- */
+function buildGridDemo(){
+  const g = $("gridDemo");
+  ["L","M","A","I"].forEach(ch=>{
+    const d = document.createElement("div"); d.className="g-cell";
+    const svg = document.createElementNS(NSX,"svg");
+    svg.setAttribute("viewBox","0 0 48 48");
+    const bg = document.createElementNS(NSX,"circle");
+    bg.setAttribute("cx",24); bg.setAttribute("cy",24); bg.setAttribute("r",21);
+    bg.setAttribute("fill","var(--fg)");
+    const t = document.createElementNS(NSX,"text");
+    t.setAttribute("x",24); t.setAttribute("y",26); t.setAttribute("text-anchor","middle");
+    t.setAttribute("dominant-baseline","middle");
+    t.setAttribute("font-size",22); t.setAttribute("font-weight","800");
+    t.setAttribute("fill","var(--bg)"); t.setAttribute("font-family","inherit");
+    t.textContent = ch;
+    svg.appendChild(bg); svg.appendChild(t);
+    d.appendChild(svg);
+    g.appendChild(d);
+  });
+}
+
+/* ---------- Theme invert ---------- */
+const themeBtn = $("themeBtn");
+themeBtn.addEventListener("click", ()=>{
+  const cur = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", cur);
+  themeBtn.textContent = cur==="dark" ? "反白 Invert" : "反色 Invert";
+  updateRect();
+});
+
+/* ---------- Main loop ---------- */
+let last = performance.now();
+function tick(now){
+  const dt = Math.min(0.033, (now-last)/1000); last = now;
+  phase += dt;
+  hold += dt;
+  if(hold > autoNext && !REDUCED){ hold = 0; nextState(); }
+  // letters bounce independently
+  applyBounce(dt, phase);
+  // eyes follow pointer
+  const ex = eyeExtra[0], ey = eyeExtra[1];
+  const lx = k(eye.lx, look.tx + ex, dt, 16);
+  const ly = k(eye.ly, look.ty + ey, dt, 16);
+  const rx = k(eye.rx, look.tx + ex, dt, 16);
+  const ry = k(eye.ry, look.ty + ey, dt, 16);
+  $("eyeL").setAttribute("transform", `translate(${(88+lx).toFixed(1)} ${(108+ly).toFixed(1)})`);
+  $("eyeR").setAttribute("transform", `translate(${(152+rx).toFixed(1)} ${(108+ry).toFixed(1)})`);
+  // head motion
+  const b = bounce; bounce = Math.max(0, bounce - dt*1.7);
+  const hopY = -Math.sin(b*Math.PI)*20;
+  const sh = shake; shake = Math.max(0, shake - dt*1.4);
+  const shX = sh>0 ? Math.sin(phase*64)*sh*7 : 0;
+  const nd = nod; nod = Math.max(0, nod - dt*1.5);
+  const rot = nd>0 ? Math.sin(phase*26)*nd*7 : 0;
+  const fl = cur==="idle" && !REDUCED ? Math.sin(phase*1.3)*2.5 : 0;
+  $("headG").setAttribute("transform",
+    `translate(${shX.toFixed(1)} ${(hopY+fl).toFixed(1)}) rotate(${rot.toFixed(1)} 120 116)`);
+  // fx visibility per state
+  FX.thinking[0].forEach(d=>d.setAttribute("opacity", cur==="thinking"?1:0));
+  FX.generating[0].setAttribute("opacity", cur==="generating"?1:0);
+  FX.searching.forEach(el=>el.setAttribute("opacity", cur==="searching"?1:0));
+  FX.listening.forEach(el=>el.setAttribute("opacity", cur==="listening"?1:0));
+  FX.replying[0].setAttribute("opacity", cur==="replying"?1:0);
+  FX.done[0].setAttribute("opacity", cur==="done"?1:0);
+  FX.error[0].setAttribute("opacity", cur==="error"?1:0);
+  FX.remind[0].setAttribute("opacity", cur==="remind"?1:0);
+  renderFX(dt, phase);
+  requestAnimationFrame(tick);
+}
+
+/* ---------- Init ---------- */
+buildFX();
+buildStateBar();
+buildMarks();
+buildIcons();
+buildGridDemo();
+setState("idle");
+requestAnimationFrame(tick);
+updateRect();
+</script>
+</body>
+</html>
