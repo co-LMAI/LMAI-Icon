@@ -30,6 +30,7 @@ LMAI（Liao Mai AI）专属视觉图标系统，适用于 **AI Agent 智能助�
 
 ## 声明
 
+- 本项目由**豆包（Doubao）AI** 辅助生成。
 - 本项目的交互机制（弹簧物理、光标追踪、状态环）与视觉语言受 **Grok Bot (xAI)** 启发，并参考了开源复刻项目 [sheng-yh/Reproduce-grok-bot-icon](https://github.com/sheng-yh/Reproduce-grok-bot-icon)（该仓库为 *all rights reserved* 教育展示，本项目为**独立实现**，未复制其代码）。
 - **LMAI 字母标、48 枚图标图形与全部文案均为原创**，属于 LMAI 品牌资产；Grok 及相关图形商标归 xAI 所有。
 
