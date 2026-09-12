@@ -156,9 +156,8 @@ section{scroll-margin-top:24px}
       <g id="headG">
         <circle id="head" cx="120" cy="116" r="88" fill="var(--fg)"/>
         <g id="cornerDot" fill="var(--accent)">
-          <path d="M 176 60 L 162 52 L 162 68 Z"/>
-          <path d="M 176 60 L 190 52 L 190 68 Z"/>
-          <circle cx="176" cy="60" r="3.5"/>
+          <path d="M 176 60 L 162 52.5 Q 160.5 60 162 67.5 Z"/>
+          <path d="M 176 60 L 190 52.5 Q 191.5 60 190 67.5 Z"/>
         </g>
       </g>
       <g id="eyeG">
@@ -563,13 +562,9 @@ function markSVG(m){
       svg.appendChild(t);
     });
     const dot = document.createElementNS(NS,"path");
-    dot.setAttribute("d","M 80 30 L 73.5 26.8 L 73.5 33.2 Z M 80 30 L 86.5 26.8 L 86.5 33.2 Z");
+    dot.setAttribute("d","M 80 30 L 73.5 27 Q 72.8 30 73.5 33 Z M 80 30 L 86.5 27 Q 87.2 30 86.5 33 Z");
     dot.setAttribute("fill","var(--accent)");
     svg.appendChild(dot);
-    const knot = document.createElementNS(NS,"circle");
-    knot.setAttribute("cx",80); knot.setAttribute("cy",30); knot.setAttribute("r",1.5);
-    knot.setAttribute("fill","var(--accent)");
-    svg.appendChild(knot);
   } else {
     const t = document.createElementNS(NS,"text");
     t.setAttribute("x",48); t.setAttribute("y",50);
@@ -580,13 +575,9 @@ function markSVG(m){
     t.textContent = m.txt;
     svg.appendChild(t);
     const dot = document.createElementNS(NS,"path");
-    dot.setAttribute("d","M 80 30 L 73.5 26.8 L 73.5 33.2 Z M 80 30 L 86.5 26.8 L 86.5 33.2 Z");
+    dot.setAttribute("d","M 80 30 L 73.5 27 Q 72.8 30 73.5 33 Z M 80 30 L 86.5 27 Q 87.2 30 86.5 33 Z");
     dot.setAttribute("fill","var(--accent)");
     svg.appendChild(dot);
-    const knot = document.createElementNS(NS,"circle");
-    knot.setAttribute("cx",80); knot.setAttribute("cy",30); knot.setAttribute("r",1.5);
-    knot.setAttribute("fill","var(--accent)");
-    svg.appendChild(knot);
   }
   return svg;
 }
